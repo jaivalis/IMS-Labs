@@ -20,6 +20,8 @@ if (colorSpace == 1),
             opp3(x,y) = (redValue(x, y) + greenValue(x, y) + blueValue(x, y)/ sqrt(3));
         end
     end
+    figO = figure('name','Opponent color space');
+    set(figO, 'name','Opponent color space');
     subplot(2,2,1);
     imshow(img);
     subplot(2,2,2);
@@ -40,6 +42,7 @@ if (colorSpace == 2),
             rgb3(x,y) = blueValue(x, y) / redValue(x, y) + greenValue(x, y) + blueValue(x, y);
         end
     end
+    figure('name','RGB color space');;
     subplot(2,2,1);
     imshow(img);
     subplot(2,2,2);
@@ -53,9 +56,14 @@ end
 
 %hsv color space
 if (colorSpace == 3),
-    hsv_image = rgb2hsv(img); 
-    subplot(1,2,1);
+    hsv_image = rgb2hsv(img);
+    figure('name','HSV color space');;
+    subplot(2,2,1);
     imshow(img);
-    subplot(1,2,2);
-    imshow(hsv_image);
+    subplot(2,2,2);
+    imshow(hsv_image(:,:,1));
+    subplot(2,2,3);
+    imshow(hsv_image(:,:,2));
+    subplot(2,2,4);
+    imshow(hsv_image(:,:,3));
 end
