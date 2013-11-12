@@ -61,51 +61,66 @@ for i = 1:img_size,
     g = linsolv;
 
     % albedo at this point is norm(g)
-    albedo(i,j) = norm(g);
+    normG = norm(g);
+    albedo(i,j) = normG;
 
     if albedo(i,j) ~= 0,
         % normal at this point is | g |
-        normal(i,j,:) = g / albedo(i,j);
+        normal(i,j,:) = g / normG;
         p(i,j) = normal(i,j,1) / normal(i,j,3);
         q(i,j) = normal(i,j,2) / normal(i,j,3);
     end
     % p at this point is N1 / N3
-    p(i, j) = normal(i, j, 1) / normal(i, j, 3);
+    %p(i, j) = normal(i, j, 1) / normal(i, j, 3);
 
     % q at this point is N2 / N3
-    q(i, j) = normal(i, j, 2) / normal(i, j, 3);
+    %q(i, j) = normal(i, j, 2) / normal(i, j, 3);
   end
 end
 
-
 %top left corner of height map is zero
-height = zeros(512, 512);
+heightMap1 = zeros(img_size, img_size);
 %for each pixel in the left column of height map
-for i = 1:img_size,
-  % height value=previous height value + corresponding q value
-  height(1, i) = height(1, i) + q(1, i);
+for i=2 : img_size
+    % height value=previous height value + corresponding q value
+    heightMap1(i, 1) = heightMap1(i-1, 1) + q(i, 1);
 end
 
 %for each row
-for i = 1:img_size,
-  %for each element of the row except for leftmost
-  for j = 2:img_size,
-    %height value = previous height value + corresponding p value
-    height(j, i) = height(j, i) + p(j, i);
-  end
+for i=1 : img_size
+    %for each element of the row except for leftmost
+   for j = 2 : img_size
+       %height value = previous height value + corresponding p value
+      heightMap1(i,j) = heightMap1(i, j-1) + p(i, j);
+   end   
 end
 
 figure(1);
+mesh(heightMap1);
+
+figure(2);
 imshow(albedo);
 
-stepsize = 30;
+stepsize = 15;
 range = 1:stepsize:512;
 u = normal(range, range, 1);
 v = normal(range, range, 2);
 w = normal(range, range, 3);
 
 [x,y] = meshgrid(range, range);
-z = zeros(ceil(img_size / stepsize), ceil(img_size / stepsize));
+% z = zeros(ceil(img_size / stepsize), ceil(img_size / stepsize));
+% for i=1:ceil(img_size / stepsize),
+%     for j=1:ceil(img_size / stepsize),
+%         if isnan(heightMap1(i,j)),
+%             z(i,j) = 0;
+%         else
+%             z(i,j) = heightMap1(i,j);
+%         end
+%     end
+% end
 
-figure(2);
-quiver3(x,y,z,u,v,w);
+figure(3);
+quiver3(heightMap1(range,range),u,v,w);
+
+%figure(4);
+%quiver3(height(range,range), u, v, w);
