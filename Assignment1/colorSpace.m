@@ -20,10 +20,13 @@ if (colorSpace == 1),
             opp3(x, y) = ((redValue(x, y) + greenValue(x, y) + blueValue(x, y))/ sqrt(3));
         end
     end
+    opp(:, :, 1) = opp1;
+    opp(:, :, 2) = opp2;
+    opp(:, :, 3) = opp3;
     figO = figure('name', 'Opponent color space');
     set(figO, 'name','Opponent color space');
     subplot(2, 2, 1);
-    imshow(img);
+    imshow(opp);
     subplot(2, 2, 2);
     imshow(opp1);
     subplot(2, 2, 3);
@@ -39,9 +42,12 @@ if (colorSpace == 2),
     rgb1 = double(img(:,:,1)./norm);
     rgb2 = double(img(:,:,2)./norm);
     rgb3 = double(img(:,:,3)./norm);
+    rgb(:, :, 1) = rgb1;
+    rgb(:, :, 2) = rgb2;
+    rgb(:, :, 3) = rgb3;
     figure('name', 'RGB color space');
     subplot(2, 2, 1);
-    imshow(img);
+    imshow(rgb);
     subplot(2, 2, 2);
     imshow(rgb1);
     subplot(2, 2, 3);
