@@ -3,14 +3,12 @@
 %shape of output?
 
 function inOut = gaussianConv(imagePath, sigma_x, sigma_y)
-    img = im2double(imread(imagePath));
-    imgSizeX = size(img, 1);
-    imgSizeY = size(img, 2);
-    G = zeros(imgSizeX, imgSizeY);
-    for x=1:imgSizeX,
-        for y=1:imgSizeY,
-            G(x,y) = gaussian(sigma_x, x) * gaussian(sigma_y, y);
-        end
-    end
-    inOut = conv2(img, G, 'same');
+  img = im2double(imread(imagePath));
+
+  G_x = gaussian(sigma_x);
+  G_y = gaussian(sigma_y);
+
+  G = G_x.' *  G_y;
+
+  inOut = conv2(img, G, 'same');
 end

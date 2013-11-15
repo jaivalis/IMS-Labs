@@ -1,5 +1,12 @@
-% in the equation in the assignment there's a x, where is it from?
-% i just added it to arguments of the function
-function G = gaussian(sigma, x)
-    G = ( 1 / ( sigma * sqrt( 2 * pi ) ) * exp ( - ( x ^ 2 ) / ( 2 * sigma ^ 2 ) ) );
+function G = gaussian(sigma)
+  filterSize = 2 * sigma + 1;
+
+  G = zeros(1, filterSize);
+  filterRange = -sigma:sigma;
+  index = 1;
+
+  for x = filterRange,
+    G(index) = ( 1/( sigma * sqrt( 2*pi ) ) * exp ( - ( x^2 ) / ( 2 * sigma^2 ) ) );
+    index = index + 1;
+  end
 end
