@@ -18,8 +18,10 @@ figure; imshowpair(matlabOutput, ourOutput, 'montage');
 % 1.4
 [magnitude, orientation]  = gradmag(img, 0);
 
+magnitude   = gradmagRes(1);
+orientation = gradmagRes(2);
+
 % 1.5.1
-figure; imshow ( orientation ,[ -pi , pi ]);
-figure; imshow ( magnitude );
+imshow ( orientation ,[ -pi , pi ]);
 colormap ( hsv );
 colorbar;

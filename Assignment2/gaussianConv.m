@@ -1,7 +1,4 @@
-%Factors into product of two 1D Gaussians
-%slide 105 of lecture 3
-%shape of output?
-
+% Part 1.2
 function inOut = gaussianConv(imagePath, sigma_x, sigma_y)
   img = im2double(imread(imagePath));
 
@@ -11,4 +8,6 @@ function inOut = gaussianConv(imagePath, sigma_x, sigma_y)
   G = G_x.' *  G_y;
 
   inOut = conv2(img, G, 'same');
+  
+  Gd = gaussianDer(G_x, sigma_x);
 end
