@@ -9,5 +9,6 @@ function inOut = gaussianConv(imagePath, sigma_x, sigma_y)
 
   inOut = conv2(img, G, 'same');
   
-  Gd = gaussianDer(G_x, sigma_x);
+  % what's that?
+  % Gd = gaussianDer(G_x, sigma_x);
 end
