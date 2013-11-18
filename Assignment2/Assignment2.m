@@ -41,6 +41,7 @@ title('Comparison of the Matlab built-in function of the gaussian filter (left) 
 %title('quiver');
 
 % 1.5.2.1
+figure;
 for i=1:4,
     [magnitude, orientation]  = gradmag(img, i);
     subplot(2, 2, i);
@@ -64,7 +65,7 @@ end
 
 % 1.5.3
 figure;
-thresholds  = [0 .02 .04 .06];
+thresholds  = [.01 .02 .04 .06];
 sigmas      = [1 2 4 8];
 
 img_size = size(img);
@@ -79,13 +80,14 @@ for s = 1:length(sigmas),
     for i = 1:img_size(1),
       for j = 1:img_size(2),
         if magnitude(i,j) < threshold,
-           magnitude(i,j) = 0;
+          magnitude(i,j) = 255;
+        else 
+          magnitude(i,j) = 0;
         end
       end
     end
     subplot(length(thresholds), length(sigmas), plotNumber);
-%     figure;
-    imshow(magnitude); colormap (hsv);
+    imshow(magnitude); %colormap (hsv); colorbar;
     title(strcat('threshold = ', num2str(threshold),', sigma = ', num2str(sigma)));
     plotNumber = plotNumber + 1;
   end
