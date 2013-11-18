@@ -3,7 +3,7 @@ sigma_x = 4;
 sigma_y = 4;
 
 global imagePath;
-imagePath = 'Portrait_of_a_Proboscis_Monkey.jpg';
+imagePath = 'zebra.png';
 ourOutput = gaussianConv(imagePath, sigma_x, sigma_y);
 
 %compare implementation to matlabbuilt-in function
@@ -31,10 +31,10 @@ title('Comparison of the Matlab built-in function of the gaussian filter (left) 
 [magnitude, orientation]  = gradmag(img, 1);
 
 % 1.5.1
-figure; imshow ( orientation ,[ -pi , pi ]);
-figure; imshow ( magnitude );
-colormap ( hsv );
-colorbar;
+% figure; imshow ( orientation ,[ -pi , pi ]);
+% figure; imshow ( magnitude );
+% colormap ( hsv );
+% colorbar;
 % Visualize your result using Matlab quiver function.
 %figure;
 %quiver(X,Y,orientation(1),orientation(2));
@@ -46,8 +46,7 @@ for i=1:4,
     subplot(2, 2, i);
     imshow( magnitude);
     title(strcat('sigma = ', num2str(i)));
-    colormap ( hsv );
-    colorbar;
+    colormap (hsv); colorbar;
 end
 % Answer: As sigma increases the pictures get darker(more redish, less
 % orangish) and smoother.
@@ -55,9 +54,9 @@ end
 % 1.5.2.2
 figure;
 for i=1:4,
-    [magnitude, orientation]  = gradmag(img, i);
+    [magnitude, orientation] = gradmag(img, i);
     subplot(2, 2, i);
-    imshow( orientation ,[ -pi , pi ]);
+    imshow(orientation, [-pi, pi]);
     title(strcat('sigma = ', num2str(i)));
 end
 % ??? Answer: As sigma increases the images have less noise(less small,
@@ -65,24 +64,29 @@ end
 
 % 1.5.3
 figure;
-tresholds = [0.03 0.06 0.1];
-sigma = 0.5;
+thresholds  = [0 .02 .04 .06];
+sigmas      = [1 2 4 8];
+
 img_size = size(img);
-ind = 1;
-for sigma=1:3,
-    for tre=1:3
-        [magnitude, orientation]  = gradmag(img, sigma);
-        for i=1:img_size(1),
-            for j=1:img_size(2),
-                if magnitude(i,j) < tresholds(tre),
-                    magnitude(i,j) = 0;
-                end
-            end
-        end
-        subplot(3,3, ind);
-        imshow(magnitude);
-        title(strcat('treshold = ', num2str(tresholds(tre)),', sigma = ', num2str(sigma)));
-        ind = ind + 1;
-    end
-end
+plotNumber = 1;
+for s = 1:length(sigmas),
+  sigma = sigmas(s);
+  
+  for t = 1:length(thresholds),
+    threshold = thresholds(t);
     
+    [magnitude, orientation]  = gradmag(img, sigma);
+    for i = 1:img_size(1),
+      for j = 1:img_size(2),
+        if magnitude(i,j) < threshold,
+           magnitude(i,j) = 0;
+        end
+      end
+    end
+    subplot(length(thresholds), length(sigmas), plotNumber);
+%     figure;
+    imshow(magnitude); colormap (hsv);
+    title(strcat('threshold = ', num2str(threshold),', sigma = ', num2str(sigma)));
+    plotNumber = plotNumber + 1;
+  end
+end
