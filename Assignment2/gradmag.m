@@ -10,7 +10,9 @@ function [magnitude, orientation] = gradmag(img, sigma)
   % taking derivatives of an image produces noise.
   % solution: first smooth by gaussian and then derivative
   
-  imgPath = 'img1.jpg';
+  global imagePath;
+  imgPath = imagePath;
+%   imgPath = 'img1.jpg';
   smoothed_image = gaussianConv(imgPath, sigma, sigma);
   [gx,gy] = gradient(smoothed_image);
   magnitude = sqrt(gx.*gx+gy.*gy);
@@ -25,10 +27,21 @@ function [magnitude, orientation] = gradmag(img, sigma)
   
   % taking the derivative in x of the image can be done by convolution
   % with the derivative of a Gaussian
-  grad_filtered_img_x = conv2(img, Gd_x, 'same');
-  grad_filtered_img_y = conv2(img, Gd_y, 'same');
-  magnitude2 = sqrt(grad_filtered_img_x.*grad_filtered_img_x+grad_filtered_img_y.*grad_filtered_img_y);
-  orientation2 = atan2(grad_filtered_img_x,grad_filtered_img_y);
+    % if rgb convolve for every channel
+  if size(img, 3) == 3
+      filter_imx_x = zeros(size(img));
+      filter_imx_y = zeros(size(img));
+      for i = 1:3
+          filter_imx_x(:,:,i) = conv2(img(:,:,i), Gd_x, 'same');
+          filter_imx_y(:,:,i) = conv2(img(:,:,i), Gd_y, 'same');
+      end
+  % if grayscale convolve only grayscale image
+  else
+      filter_imx_x = conv2(img, Gd_x, 'same');
+      filter_imx_y = conv2(img, Gd_y, 'same');
+  end
+  magnitude2 = sqrt(filter_imx_x.*filter_imx_x+filter_imx_y.*filter_imx_y);
+  orientation2 = atan2(filter_imx_x,filter_imx_y);
   
   % Test:
   isequal(magnitude, magnitude2)
