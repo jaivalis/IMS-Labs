@@ -16,7 +16,4 @@ function ret = gaussianConv(imagePath, sigma_x, sigma_y)
   else
     ret = conv2(img, G, 'same');
   end
-
-  % what's that?
-  % Gd = gaussianDer(G_x, sigma_x);
 end

@@ -26,8 +26,8 @@ function [magnitude, orientation] = gradmag(img, sigma)
           filter_imx_y(:,:,i) = conv2(img(:,:,i), Gd_y, 'same');
       end
   else       % if grayscale convolve only grayscale image
-      filter_imx_x = conv2(img, Gd_x, 'same');
-      filter_imx_y = conv2(img, Gd_y, 'same');
+      filter_imx_x = conv2(double(img), Gd_x, 'same');
+      filter_imx_y = conv2(double(img), Gd_y, 'same');
   end
   magnitude = sqrt(filter_imx_x.*filter_imx_x + filter_imx_y.*filter_imx_y);
   orientation = atan2(filter_imx_x, filter_imx_y);
