@@ -1,6 +1,6 @@
 function last
   % TODO Play around with these values and find the 'best' output
-  sigmas = [1 20 40];
+  sigmas = [10];
   impulse = zeros(41, 41);
   impulse(20, 20) = 1;
   f = figure;
@@ -29,7 +29,6 @@ function last
 
     img = ImageDerivatives(impulse, sigma, 'yx');
     subplot(3,6,(i-1) + 6);
-    i
     imshow(img,[]);  title(strcat('yx, sigma = ', num2str(sigma)));
   end
   saveas(f, 'impulse.png');
