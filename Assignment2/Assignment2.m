@@ -47,7 +47,7 @@ title('Comparison of the Matlab built-in function of the gaussian filter (left) 
 % end
 
 % 1.5.2.1
-figure;
+f = figure;
 for i=1:4,
     [magnitude, orientation]  = gradmag(img, i);
     subplot(2, 2, i);
@@ -56,18 +56,20 @@ for i=1:4,
     colorbar;
     title(strcat('sigma = ', num2str(i)));
 end
+saveas(f,'magnitude.png')
 
 % 1.5.2.2
-figure;
+f = figure;
 for i=1:4,
     [magnitude, orientation] = gradmag(img, i);
     subplot(2, 2, i);
     imshow(orientation, [-pi, pi]);
     title(strcat('sigma = ', num2str(i)));
 end
+saveas(f,'orientation.png')
 
 % 1.5.3
-figure;
+f = figure;
 thresholds  = [1 5 10 15];
 sigmas      = [1 2 4 8];
 
@@ -97,7 +99,7 @@ for s = 1:length(sigmas),
     plotNumber = plotNumber + 1;
   end
 end
-
+saveas(f,'threshold.png')
 % Create impulse image
 impulse_size = 11;
 impulse = zeros(impulse_size, impulse_size);
@@ -112,33 +114,35 @@ sigmas = [1 ceil(impulse_size/2)];
 sindex = 1;
 subplots = length(sigmas)*2;
 
-figure;
-for sindex = 1:length(sigmas),
-  sigma = sigmas(sindex);
-  
-  img = ImageDerivatives(impulse, sigma, 'x');
-  subplot(subplots, 3, (sindex-1)*6 + 1);
-  imshow(img);  title(strcat('x, sigma = ', num2str(sigma)));
-  
-  
-  img = ImageDerivatives(impulse, sigma, 'y'); 
-  subplot(subplots, 3, (sindex-1)*6 + 2);
-  imshow(img);  title(strcat('y, sigma = ', num2str(sigma)));
-  
-  img = ImageDerivatives(impulse, sigma, 'xx'); 
-  subplot(subplots, 3, (sindex-1)*6 + 3);
-  imshow(img);  title(strcat('xx, sigma = ', num2str(sigma)));
-  
-  img = ImageDerivatives(impulse, sigma, 'yy'); 
-  subplot(subplots, 3, (sindex-1)*6 + 4);
-  imshow(img);  title(strcat('yy, sigma = ', num2str(sigma)));
-  
-  img = ImageDerivatives(impulse, sigma, 'xy'); 
-  subplot(subplots, 3, (sindex-1)*6 + 5);
-  imshow(img);  title(strcat('xy, sigma = ', num2str(sigma)));
-  
-  img = ImageDerivatives(impulse, sigma, 'yx'); 
-  subplot(subplots, 3, (sindex-1)*6 + 6);
-  imshow(img);  title(strcat('yx, sigma = ', num2str(sigma)));
-  it = it + 1;
-end
+% f = figure;
+% for sindex = 1:length(sigmas),
+%   sigma = sigmas(sindex);
+%   
+%   img = ImageDerivatives(impulse, sigma, 'x');
+%   subplot(subplots, 3, (sindex-1)*6 + 1);
+%   imshow(img);  title(strcat('x, sigma = ', num2str(sigma)));
+%   
+%   
+%   img = ImageDerivatives(impulse, sigma, 'y'); 
+%   subplot(subplots, 3, (sindex-1)*6 + 2);
+%   imshow(img);  title(strcat('y, sigma = ', num2str(sigma)));
+%   
+%   img = ImageDerivatives(impulse, sigma, 'xx'); 
+%   subplot(subplots, 3, (sindex-1)*6 + 3);
+%   imshow(img);  title(strcat('xx, sigma = ', num2str(sigma)));
+%   
+%   img = ImageDerivatives(impulse, sigma, 'yy'); 
+%   subplot(subplots, 3, (sindex-1)*6 + 4);
+%   imshow(img);  title(strcat('yy, sigma = ', num2str(sigma)));
+%   
+%   img = ImageDerivatives(impulse, sigma, 'xy'); 
+%   subplot(subplots, 3, (sindex-1)*6 + 5);
+%   imshow(img);  title(strcat('xy, sigma = ', num2str(sigma)));
+%   
+%   img = ImageDerivatives(impulse, sigma, 'yx'); 
+%   subplot(subplots, 3, (sindex-1)*6 + 6);
+%   imshow(img);  title(strcat('yx, sigma = ', num2str(sigma)));
+%   it = it + 1;
+% end
+% saveas(f,'last.png')
+last();
