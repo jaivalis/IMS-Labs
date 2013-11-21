@@ -1,7 +1,8 @@
 function last
-  sigmas = [30];
-  impulse = zeros(501,501);
-  impulse(256,256) = 1;
+  % TODO Play around with these values and find the 'best' output
+  sigmas = [1 20 40];
+  impulse = zeros(41, 41);
+  impulse(20, 20) = 1;
 
   for i = 1:length(sigmas),
     sigma = sigmas(i);
