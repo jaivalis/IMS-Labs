@@ -31,5 +31,4 @@ function ImageDerivativesTest
     subplot(length(sigmas), 6, (i-1)*6 + 6);
     imshow(img, []);  title(strcat('yx, sigma = ', num2str(sigma)));
   end
-  saveas(f, 'impulse.png');
 end

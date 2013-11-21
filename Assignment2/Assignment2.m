@@ -30,22 +30,6 @@ title('Comparison of the Matlab built-in function of the gaussian filter (left) 
 % 1.4
 [magnitude, orientation]  = gradmag(img, 1);
 
-%1.5.1 TODO delete this ?
-%imshow(img,[]);
-% img1 = fspecial('gaussian', 50, 5);
-% figure;
-% splot = 1;
-% for sigma=[1,3,5,7,9]
-%     G = gaussian(sigma);
-%     kernel = gaussianDer(G, sigma);
-%     Gx = conv2(double(img1), kernel, 'same');
-%     Gy = conv2(double(img1), kernel', 'same');
-%     subplot(5,1,splot);
-%     quiver(Gx,Gy);
-%     title(strcat('Quiver for sigma = ', sigma));
-%     splot = splot + 1;
-% end
-
 % 1.5.2.1
 f = figure;
 for i=1:4,
@@ -100,49 +84,3 @@ for s = 1:length(sigmas),
   end
 end
 saveas(f,'threshold.png')
-% Create impulse image
-impulse_size = 11;
-impulse = zeros(impulse_size, impulse_size);
-
-impulse(ceil(impulse_size/2), ceil(impulse_size/2)) = 255;
-impulse = double(impulse);
-
-figure;  imshow(impulse); title('Impulse Image');
-it = 0;
-
-sigmas = [1 ceil(impulse_size/2)];
-sindex = 1;
-subplots = length(sigmas)*2;
-
-% f = figure;
-% for sindex = 1:length(sigmas),
-%   sigma = sigmas(sindex);
-%   
-%   img = ImageDerivatives(impulse, sigma, 'x');
-%   subplot(subplots, 3, (sindex-1)*6 + 1);
-%   imshow(img);  title(strcat('x, sigma = ', num2str(sigma)));
-%   
-%   
-%   img = ImageDerivatives(impulse, sigma, 'y'); 
-%   subplot(subplots, 3, (sindex-1)*6 + 2);
-%   imshow(img);  title(strcat('y, sigma = ', num2str(sigma)));
-%   
-%   img = ImageDerivatives(impulse, sigma, 'xx'); 
-%   subplot(subplots, 3, (sindex-1)*6 + 3);
-%   imshow(img);  title(strcat('xx, sigma = ', num2str(sigma)));
-%   
-%   img = ImageDerivatives(impulse, sigma, 'yy'); 
-%   subplot(subplots, 3, (sindex-1)*6 + 4);
-%   imshow(img);  title(strcat('yy, sigma = ', num2str(sigma)));
-%   
-%   img = ImageDerivatives(impulse, sigma, 'xy'); 
-%   subplot(subplots, 3, (sindex-1)*6 + 5);
-%   imshow(img);  title(strcat('xy, sigma = ', num2str(sigma)));
-%   
-%   img = ImageDerivatives(impulse, sigma, 'yx'); 
-%   subplot(subplots, 3, (sindex-1)*6 + 6);
-%   imshow(img);  title(strcat('yx, sigma = ', num2str(sigma)));
-%   it = it + 1;
-% end
-% saveas(f,'last.png')
-last();

@@ -1,4 +1,12 @@
-README file for 
+README file for Assignment 2 of IMS 2013
 
                 Tobias Stahl                            10528199
                 Ioannis Giounous Aivalis                10524851
+
+
+Executing Assignment2.m will provide all the outputs as reported except for 2.
+Those are :
+                (a) The quiver plot, which is located [and commented] under
+                    gradmag.m file
+                (b) The output for the last part of the exercise which is located
+                    in ImageDerivativesTest.m file

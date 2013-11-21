@@ -1,2 +1,0 @@
-function G = gaussian(sigma)
-G = ( 1 / (sigma * sqrt(2 * pi)) * exp (x*x
