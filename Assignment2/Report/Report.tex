@@ -22,7 +22,7 @@
 \maketitle
 
 \section{Introduction}
-This report is about Assignment 2 of the UvA course Intelligent Multimedia Systems. The goal of Assignment 2 is to implement functions to smooth images with a gaussian filter.
+This report is about Assignment 2 of the UvA course Intelligent Multimedia Systems. The goal of Assignment 2 is to implement functions to smooth images with a Gaussian filter.
 
 \section{Exercise 1}
 
@@ -36,7 +36,7 @@ Our implementation of those functions are located in the files \texttt{gaussian.
 \end{figure}
 
 \subsection{Exercise 1.5.2 - Magnitude and orientation of different $\sigma$}
-In this exercise magnitude and orientation of the picture are extracted with help of functions \texttt{gaussianDer.m}, which computes the derivative of gaussian filter G, and \texttt{gradmag.m}, which convolves the image with the derivative of the filter and returns the two images of magnitude and orientation.\\
+In this exercise magnitude and orientation of the picture are extracted with help of functions \texttt{gaussianDer.m}, which computes the derivative of Gaussian filter G, and \texttt{gradmag.m}, which convolves the image with the derivative of the filter and returns the two images of magnitude and orientation.\\
 For both the orientation and the magnitude it is clear to see, that for increasing values of $\sigma$ the smaller structures disappear and only large structures are affected by the gradient. The output of various plots are shown in Figure ~\ref{magnitude} for the magnitude and Figure ~\ref{quiv} for the orientation.
 \begin{figure}[h!]
 \includegraphics[scale=0.6]{magnitude.png}
@@ -64,13 +64,13 @@ For this exercise we first create an impulse picture initialized with zeros (bla
 The result image is suppose to display the filter. Figure ~\ref{impulse} shows the result images of this exercise.
 
 \begin{figure}[h!]
-\includegraphics[scale=0.4]{impulse.png}
+\includegraphics[scale=0.6]{impulse.png}
 \caption{Filter on impulse image}
 \label{impulse}
 \end{figure}
 
 \section{Conclusion}
-In this assignment the functions to create a gaussian filter and its derivatives, and to convolve those with any image were implemented and tested with different exercises. 
+In this assignment the functions to create a Gaussian filter and its derivatives, and to convolve those with any image were implemented and tested with different exercises. 
 
 
 
