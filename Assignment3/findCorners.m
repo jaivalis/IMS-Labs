@@ -1,7 +1,6 @@
 function H = findCorners( h, N, threshold )
 % FINDCORNERS Will check use NxN windows to determine if the given pixel is
 % an edge.
-%   Detailed explanation goes here
   h_size = size(h);
   H = zeros(h_size);
   
@@ -19,16 +18,21 @@ function H = findCorners( h, N, threshold )
       
       window = h(xUpLeft:yUpLeft, xDownRight:yDownRight);
       window_size = size(window);
-      flag = 1;
+      flag = 1; % Assume it is an edge, flag = 1;
       for xx = 1:window_size(1),
         for yy = 1:window_size(2),
-          if h(x,y) < window(xx, yy) || h(x,y) < threshold,
-            flag = 0;
+          if h(x,y) < window(xx, yy),
+            flag = 0; % not an edge
+            break;
           end
+        end
+        if flag == 0,
+          break % check next pixel
         end
       end
 %       imregionalmax()
       H(x, y) = flag;
     end
   end
+  H = ~H; % Negate
 end
