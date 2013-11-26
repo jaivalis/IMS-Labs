@@ -5,6 +5,7 @@ function regions1 = lucas_kanade(img1, img2)
     region_size = 15;
     region_count = floor(img_size(1) / region_size);
     figure(1);    imshow(img1);
+    figure(2);    imshow(img2);
     
     % 1. divide picture in non-overlapping regions
     % region = region_size x region_size;
@@ -30,22 +31,9 @@ function regions1 = lucas_kanade(img1, img2)
 %       imshow(region);
 %     end  
     
-    % 
-    optical_flow = zeros(region_count, region_count);
-    
-    %partial derivatives of regions
-    I_t = zeros(region_count, region_size, region_size);
-    
-    
-    
     % step 2: compute A, A_t and b
-%     [I_x,I_y] = gradient(regions);
-%     A = [I_x,I_y];
     [A1, regions1] = createRegion(img1, region_size);
     [A2, regions2] = createRegion(img2, region_size);
-    
-    % not equal...
-    isequal(A1, A2);
     
     % compute I_t
     I_t = regions2 - regions1;
@@ -74,22 +62,30 @@ function regions1 = lucas_kanade(img1, img2)
         
         v(i, :, :) = reshape(temp(i, :, :), 2, 225) * reshape(b(i, :, :), 225,1);
     end
-    % siz2(v) is supposed to be (:,2)
-    % size(v)
-%     for i=1:region_count,
-%         [I_x(i, :, :),I_y(i, :, :)] = gradient(regions(i, :, :));
-%     end
-%     index = 1;
-%     for l=1:region_count,
-%         for i=1:region_size,
-%             for j=1:region_size,
-%                 A(l, index, :) = [I_x(l, i, j), I_y(l, i, j)];
-%                 b(l, index) = - I_t(l, i, j);
-%                 index = index + 1;
-%             end
-%         end
-%     end
-%     %A_t = A.';
+    % reshape v to 13x13 regions
+    v_reshaped = zeros(region_count, region_count, 2);
+    index = 1;
+    for i = 1 : region_count,
+        for j = 1 : region_count,
+            v_reshaped(i, j, :) = v(index, :);
+            index = index + 1;
+        end
+    end
     
-    
+    u = zeros(region_count, region_count, 2);
+    % create matrix with the same size of v_reshaped, but with coordinates
+    % of of center of regions
+    for j=1:region_count,
+        for i = 1:region_count,
+            xCenter = ((j-1) * region_size) + region_size/2;
+            yCenter = ((i-1) * region_size) + region_size/2;
+            u(i, j, 1) = xCenter;
+            u(i, j, 2) = yCenter;
+        end
+    end
+    size(u)
+    size(v_reshaped)
+    figure(3);
+    quiver(u(:, :, 1), u(:, :, 2), v_reshaped(:, :, 1), v_reshaped(:, :, 2));
+    set(gca,'YDir','reverse');
 end

@@ -41,6 +41,7 @@ function [magnitude, orientation] = gradmag(img, sigma)
 %   quiver(stepsize+1:stepsize:size(img,2), 5+1:stepsize:size(img,1), ...
 %                           xMagn(5+1:stepsize:end,5+1:stepsize:end), ...
 %                           yMagn(5+1:stepsize:end,5+1:stepsize:end),2);
-  title('Quiver plot');
+%    set(gca,'YDir','reverse');
+  %title('Quiver plot');
 
 end
