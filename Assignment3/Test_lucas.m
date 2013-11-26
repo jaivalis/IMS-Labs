@@ -1,6 +1,6 @@
-img1 = double(rgb2gray(imread('sphere1.ppm')));
-img2 = double(rgb2gray(imread('sphere2.ppm')));
+img1 = imread('sphere1.ppm');
+img2 = imread('sphere2.ppm');
 img3 = double(imread('synth1.pgm'));
 img4 = double(imread('synth2.pgm'));
-Kanade(img1, img2);
-Kanade(img3, img4);
+[ centers, V ] = Kanade(img1, img2, 0);
+[ centers, V ] = Kanade(img3, img4, 0);

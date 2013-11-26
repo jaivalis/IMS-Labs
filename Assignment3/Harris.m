@@ -1,8 +1,9 @@
-function [ H, r, c ] = Harris(img)
+function [ H, r, c ] = Harris(img, suppressPlots)
 % HARRIS Corner Detector implementation
 %
 % INPUT
 % img: image to detect edges
+% suppressPlots: if true will not plot
 %
 % OUTPUT
 % H - binary corner matrix (1 if corner 0 otherwise)
@@ -42,11 +43,12 @@ function [ H, r, c ] = Harris(img)
   H = findCorners(H, n, threshold);
   
   % Populate r & c
-  H_size = size(H);
+  H_size = size( H );
   h_out = img;
   index = 1;
   for x = 1:H_size(1),
     for y = 1:H_size(2),
+      
       if H(x, y) == 1, % edge case
         r(index) = x;
         c(index) = y;
@@ -55,12 +57,15 @@ function [ H, r, c ] = Harris(img)
 %         end
         index = index + 1;
       end
+      
     end
   end
   
   % Plot
-  figure; imshow(I_x); title('Partial derivative of I(x, y) w.r.t x');
-  figure; imshow(I_y); title('Partial derivative of I(x, y) w.r.t y');
-  figure; imshow(h_out); 
-  title('Original image with corner points plotted on it');
+  if ~suppressPlots,
+    figure; imshow(I_x); title('Partial derivative of I(x, y) w.r.t x');
+    figure; imshow(I_y); title('Partial derivative of I(x, y) w.r.t y');
+    figure; imshow(h_out);
+    title('Original image with corner points plotted on it');
+  end
 end

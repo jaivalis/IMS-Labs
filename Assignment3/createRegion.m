@@ -1,6 +1,14 @@
 function [A, regions] = createRegion(img, region_size)
-    % 1. divide picture in non-overlapping regions
-    % region = region_size x region_size;
+% CREATEREGION process given image to return compounds needed for flow
+%
+% INPUT
+% img
+% region_size: size of region in pixels
+%
+% OUTPUT
+% A: matrix A of equation (18)
+% regions: matrix containing region_size x region_size images (regions)
+    % divide picture in non-overlapping regions
     region_size = 15;
     img_size = size(img);
     region_count = floor(img_size(1) / region_size);
