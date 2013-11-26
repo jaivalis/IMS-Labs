@@ -26,7 +26,7 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     % region = region_size x region_size;
     [A1, regions1] = createRegion(img1Grey, region_size);
     [A2, regions2] = createRegion(img2Grey, region_size);
-    
+
     % compute I_t, transpose(A)
     I_t = regions2 - regions1;
     A_t = permute(A1, [1 3 2]);
@@ -60,7 +60,7 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
         v(i, :, :) = reshape(temp(i, :, :), 2, region_size ^ 2) *...
             reshape(b(i, :, :), region_size ^ 2,1);
     end
-    
+
     % reshape v to 13x13 regions
     V = zeros(region_count(1), region_count(2), 2);
     index = 1;
@@ -75,9 +75,9 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     % of of center of regions
     
     % the region centers, used for plotting
-    centers = zeros(region_count(1), region_count(2), 2); 
-    for j = 1:region_count(1),
-        for i = 1:region_count(2),
+    centers = zeros(region_count(1), region_count(2), 2);
+    for i = 1:region_count(1),
+        for j = 1:region_count(2),
             xCenter = ((j-1) * region_size) + region_size/2;
             yCenter = ((i-1) * region_size) + region_size/2;
             centers(i, j, 1) = xCenter;
