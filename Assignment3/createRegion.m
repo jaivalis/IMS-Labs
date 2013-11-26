@@ -11,11 +11,11 @@ function [A, regions] = createRegion(img, region_size)
     % divide picture in non-overlapping regions
     region_size = 15;
     img_size = size(img);
-    region_count = floor(img_size(1) / region_size);
-    regions = zeros(region_count^2, region_size, region_size);
+    region_count = floor(img_size / region_size);
+    regions = zeros(region_count(1) * region_count(2), region_size, region_size);
     index = 1;
-    for j=1:region_count,
-        for i = 1:region_count,
+    for j=1:region_count(1),
+        for i = 1:region_count(2),
             xUpLeft = ((j-1) * region_size) + 1;
             xUpRight = xUpLeft + region_size - 1;
             yUpLeft = ((i-1) * region_size) + 1;
@@ -26,9 +26,9 @@ function [A, regions] = createRegion(img, region_size)
         end
     end
     % compute A
-    A = zeros(region_count ^ 2, region_size ^ 2, 2);
+    A = zeros(region_count(1) * region_count(2), region_size ^ 2, 2);
     [I_x,I_y] = gradient(regions);
-    for i = 1 : region_count ^ 2,
+    for i = 1 : region_count(1) * region_count(2),
         index = 1;
         for j = 1 : region_size,
             for k = 1 : region_size,

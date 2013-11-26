@@ -20,7 +20,7 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     img2Grey = img2Grey / 255;
     img_size = size(img1Grey);
     region_size = 15;
-    region_count = floor(img_size(1) / region_size);
+    region_count = floor(img_size / region_size);
     
     % 1. divide picture in non-overlapping regions
     % region = region_size x region_size;
@@ -33,8 +33,8 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     b_temp = - I_t;
     
     % reshape b
-    b = zeros(region_count ^ 2, region_size ^ 2, 1);
-    for i = 1 : region_count ^ 2,
+    b = zeros(region_count(1) * region_count(2), region_size ^ 2, 1);
+    for i = 1 : region_count(1) * region_count(2),
         index = 1;
         for j = 1 : region_size,
             for k = 1 : region_size,
@@ -45,11 +45,11 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     end
    
     % compute v according to equation 20
-    inverse = zeros(region_count ^ 2, 2, 2);
-    c = zeros(region_count ^ 2, 2, 2);
+    inverse = zeros(region_count(1) * region_count(2), 2, 2);
+    c = zeros(region_count(1) * region_count(2), 2, 2);
 %     temp = zeros(region_count ^ 2, region_size ^ 2, 2);
-    v = zeros(region_count ^ 2, 2); % wrong shape in this case
-    for i=1:region_count^2,
+    v = zeros(region_count(1) * region_count(2), 2); % wrong shape in this case
+    for i=1:region_count(1) * region_count(2),
         first = reshape(A_t(i, :, :), 2, region_size ^ 2);
         second = reshape(A1(i, :, :),region_size ^ 2,2);
         c(i, :, :) = first * second;
@@ -62,10 +62,10 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     end
     
     % reshape v to 13x13 regions
-    V = zeros(region_count, region_count, 2);
+    V = zeros(region_count(1), region_count(2), 2);
     index = 1;
-    for i = 1 : region_count,
-        for j = 1 : region_count,
+    for i = 1 : region_count(1),
+        for j = 1 : region_count(2),
             V(i, j, :) = v(index, :);
             index = index + 1;
         end
@@ -75,9 +75,9 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
     % of of center of regions
     
     % the region centers, used for plotting
-    centers = zeros(region_count, region_count, 2); 
-    for j = 1:region_count,
-        for i = 1:region_count,
+    centers = zeros(region_count(1), region_count(2), 2); 
+    for j = 1:region_count(1),
+        for i = 1:region_count(2),
             xCenter = ((j-1) * region_size) + region_size/2;
             yCenter = ((i-1) * region_size) + region_size/2;
             centers(i, j, 1) = xCenter;
