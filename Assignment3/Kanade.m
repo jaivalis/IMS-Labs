@@ -10,8 +10,6 @@ function Kanade(img1, img2)
     img_size = size(img1);
     region_size = 15;
     region_count = floor(img_size(1) / region_size);
-    figure;    imshow(img1);
-    figure;    imshow(img2);
     
     % 1. divide picture in non-overlapping regions
     % region = region_size x region_size;
@@ -74,6 +72,9 @@ function Kanade(img1, img2)
         end
     end
     figure;
+    imshow(img1);
+    hold on
     quiver(u(:, :, 1), u(:, :, 2), v_reshaped(:, :, 1), v_reshaped(:, :, 2));
+    hold off
     set(gca,'YDir','reverse');
 end
