@@ -65,7 +65,6 @@ function regions1 = lucas_kanade(img1, img2)
         end
     end
    
-    
     for i=1:region_count^2,
         first = reshape(A_t1(i, :, :), 2, region_size ^ 2);
         second = reshape(A1(i, :, :),region_size ^ 2,2);
