@@ -17,7 +17,7 @@ function [ H, r, c ] = Harris(img, suppressPlots)
   end
   img_size = size(img);
   k = .04;
-  threshold = 0.1;
+  threshold = 0.9999;
   n = 9; % window size
   
   sigma = 2;  
@@ -52,15 +52,15 @@ function [ H, r, c ] = Harris(img, suppressPlots)
   H_size = size( H );
   h_out = img;
   index = 1;
+  
   for x = 1:H_size(1),
     for y = 1:H_size(2),
       
       if H(x, y) == 1, % edge case
         r(index) = x;
         c(index) = y;
-%         if x - 4 > 1 && y - 4 > 1,
+        
         h_out(x, y) = 1; % add highlight
-%         end
         index = index + 1;
       end
       

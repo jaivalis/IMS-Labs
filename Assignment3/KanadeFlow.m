@@ -1,4 +1,4 @@
-function [r, c] = KanadeFlow(img1, img2, r, c)
+function [r, c, V] = KanadeFlow(img1, img2, r, c)
 % KANADE Optical flow estimation for important points
 %
 % INPUT
@@ -64,24 +64,5 @@ function [r, c] = KanadeFlow(img1, img2, r, c)
         
         V(i, :, :) = reshape(temp(i, :, :), 2, region_size ^ 2) *...
             reshape(b(i, :, :), region_size ^ 2,1);
-    end
-    
-    % reshape v
-    % test if necessary
-%     V = zeros(region_count(1), region_count(2), 2);
-%     index = 1;
-%     for i = 1 : region_count(1),
-%         for j = 1 : region_count(2),
-%             V(i, j, :) = v(index, :);
-%             index = index + 1;
-%         end
-%     end
-    
-    figure;
-    imshow(img1Grey);
-    hold on
-    quiver(r(:), c(:), V(:, 1), V(:, 2));
-    hold off
-    set(gca,'YDir','reverse');
-      
+    end   
 end
