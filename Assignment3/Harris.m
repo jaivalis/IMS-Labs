@@ -17,7 +17,7 @@ function [ H, r, c ] = Harris(img, suppressPlots)
   end
   img_size = size(img);
   k = .04;
-  threshold = 0.9999;
+  threshold = 5.5;
   n = 9; % window size
   
   sigma = 2;  

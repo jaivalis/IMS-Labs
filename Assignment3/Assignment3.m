@@ -1,5 +1,5 @@
-imagesDir = 'person_toy/';
-% imagesDir = 'pingpong/';
+% imagesDir = 'person_toy/';
+imagesDir = 'pingpong/';
 outputDir = '/out/';
 
 workingDir = pwd;
@@ -11,11 +11,10 @@ img1Path = strcat(imagesDir, char(imageNames(1)));
 img1 = imread( img1Path );
 
 for i = 2:length(imageNames),
-  i
   % Locate feature points on the first frame by using Harris Corner Detector
   [ H, r, c ] = Harris( img1, 1 );
 
-  img2Path = strcat(imagesDir, char(imageNames(i)));
+  img2Path = strcat(imagesDir, char(imageNames(i)))
   img2 = imread(img2Path);
   
   % Then, track these points with Lucas-Kanade method for optical flow
@@ -28,8 +27,7 @@ for i = 2:length(imageNames),
   hold on
   quiver(c(:), r(:), V(:, 1), V(:, 2));
   hold off
-  set(gca,'position',[0 0 1 1],'units','normalized')
-%   set(gca,'YDir','reverse');
+  set(gca, 'position', [0 0 1 1], 'units','normalized')
   saveas(f, strcat(workingDir, outputDir, char( imageNames(i) )));
   
   img1 = img2;

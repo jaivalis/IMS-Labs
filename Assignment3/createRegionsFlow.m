@@ -67,8 +67,8 @@ function [A, regions, r_rel, c_rel] = createRegionsFlow(img, r, c, region_size)
     index = 1;
     for j = 1 : region_size,
       for k = 1 : region_size,
-        A(i, index,1) = I_x(i, j, k);
-        A(i, index,2) = I_y(i, j, k);
+        A(i, index, 1) = I_x(i, j, k);
+        A(i, index, 2) = I_y(i, j, k);
         index = index + 1;
       end
     end
