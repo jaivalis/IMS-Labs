@@ -10,7 +10,12 @@ function [ H, r, c ] = Harris(img, suppressPlots)
 % r - corner row vector (contains the x-coordinate of all the corners)
 % c - corner column vector (contains the y-coordinate of all the corners)
 
-  grayImg = double(rgb2gray(img));
+  if size(img, 3) ~= 3,
+    grayImg = img;
+  else
+    grayImg = double(rgb2gray(img));
+  end
+  img_size = size(img);
   k = .04;
   threshold = 0.0000001;
   n = 9; % window size
@@ -25,7 +30,9 @@ function [ H, r, c ] = Harris(img, suppressPlots)
   % I_x: the derivative over the x direction
   % I_y: the derivative over the y direction
   I_x = conv2(G, Gd, grayImg);
+  I_x = I_x(sigma:img_size(1) + sigma, sigma:img_size(2) + sigma);
   I_y = conv2(Gd, G, grayImg);
+  I_y = I_y(sigma:img_size(1) + sigma, sigma:img_size(2) + sigma);
 
   % Q matrix
   % A can be obtained by squaring Ix then convolving it with a Gaussian
