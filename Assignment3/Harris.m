@@ -17,7 +17,7 @@ function [ H, r, c ] = Harris(img, suppressPlots)
   end
   img_size = size(img);
   k = .04;
-  threshold = 0.0000001;
+  threshold = 0.1;
   n = 9; % window size
   
   sigma = 2;  
@@ -46,7 +46,6 @@ function [ H, r, c ] = Harris(img, suppressPlots)
   H = det_Q - k * trace_Q .^ 2;
 
   % make use of threshold
-  H = (H > threshold);
   H = findCorners(H, n, threshold);
   
   % Populate r & c
