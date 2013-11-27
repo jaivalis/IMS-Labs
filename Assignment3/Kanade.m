@@ -53,7 +53,7 @@ function [ centers, V ] = Kanade(img1, img2, supressPlots)
         first = reshape(A_t(i, :, :), 2, region_size ^ 2);
         second = reshape(A1(i, :, :),region_size ^ 2,2);
         c(i, :, :) = first * second;
-        inverse(i, :, :) = inv(reshape(c(i, :, :), 2, 2));
+        inverse(i, :, :) = pinv(reshape(c(i, :, :), 2, 2));
         temp(i, :, :) = reshape(inverse(i, :, :), 2, 2) *...
             reshape(A_t(i, :, :), 2, region_size ^ 2);
         
