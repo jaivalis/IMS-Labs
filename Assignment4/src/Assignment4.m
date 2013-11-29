@@ -21,21 +21,30 @@ for i=1:image_count,
   I(i).desc           = desc;
 end
 
-comparissons = 1:length(I);
-for i = comparissons,
-  
-  desc1 = I(i).desc;
-  % compare with the rest
-  for j = i+1:length(I),
-    msg = strcat('Comparing [',num2str(i),', ',num2str(j),']\n');
-    fprintf( msg );
-    desc2 = I(j).desc;
-    
-    [ matches, scores ] = vl_ubcmatch(desc1, desc2);
-    I(i).matches(j) = matches;
-    I(j).matches(i) = matches;
-  end
-  
-  % remove i from set
-  comparissons = comparissons(comparissons ~= i);
-end
+
+desc1 = I(1).desc;
+frame1 = I(1).frames;
+desc2 = I(2).desc;
+frame2 = I(2).frames;
+
+[ matches, scores ] = vl_ubcmatch(desc1, desc2);
+Ransac(I, 1, 2, matches, frame1, frame2, 2)
+
+% comparissons = 1:length(I);
+% for i = comparissons,
+%   
+%   desc1 = I(i).desc;
+%   % compare with the rest
+%   for j = i+1:length(I),
+%     msg = strcat('Comparing [',num2str(i),', ',num2str(j),']\n');
+%     fprintf( msg );
+%     desc2 = I(j).desc;
+%     
+%     [ matches, scores ] = vl_ubcmatch(desc1, desc2);
+%     I(i).matches(j) = matches;
+%     I(j).matches(i) = matches;
+%   end
+%   
+%   % remove i from set
+%   comparissons = comparissons(comparissons ~= i);
+% end
