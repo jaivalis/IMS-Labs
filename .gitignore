@@ -1,0 +1,5 @@
+*.asv
+*~
+sift-*.tar.gz
+
+Assignment3/out/*

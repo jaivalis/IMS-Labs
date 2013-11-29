@@ -37,17 +37,8 @@ function [r, c, V] = KanadeFlow(img1, img2, r, c)
   A_t = permute(A1, [1 3 2]);
   b_temp = - I_t;
   
-  % reshape b
+  % 
   b = zeros(region_count, region_size ^ 2, 1);
-  for i = 1 : region_count,
-      index = 1;
-      for j = 1 : region_size,
-          for k = 1 : region_size,
-              b(i, index,1) = b_temp(i, j, k);
-              index = index + 1;
-          end
-      end
-  end
 
   % compute v according to equation 20
     inverse = zeros(region_count, 2, 2);
@@ -55,14 +46,24 @@ function [r, c, V] = KanadeFlow(img1, img2, r, c)
 %     temp = zeros(region_count ^ 2, region_size ^ 2, 2);
     V = zeros(region_count, 2); % wrong shape in this case
     for i=1:region_count,
-        first = reshape(A_t(i, :, :), 2, region_size ^ 2);
-        second = reshape(A1(i, :, :),region_size ^ 2,2);
-        temp1(i, :, :) = first * second;
-        inverse(i, :, :) = pinv(reshape(temp1(i, :, :), 2, 2));
-        temp(i, :, :) = reshape(inverse(i, :, :), 2, 2) *...
-            reshape(A_t(i, :, :), 2, region_size ^ 2);
-        
-        V(i, :, :) = reshape(temp(i, :, :), 2, region_size ^ 2) *...
-            reshape(b(i, :, :), region_size ^ 2,1);
-    end   
+      
+      % reshape b
+      index = 1;
+      for j = 1 : region_size,
+          for k = 1 : region_size,
+              b(i, index, 1) = b_temp(i, j, k);
+              index = index + 1;
+          end
+      end
+      
+      first = reshape(A_t(i, :, :), 2, region_size ^ 2);
+      second = reshape(A1(i, :, :),region_size ^ 2,2);
+      temp1(i, :, :) = first * second;
+      inverse(i, :, :) = pinv(reshape(temp1(i, :, :), 2, 2));
+      temp(i, :, :) = reshape(inverse(i, :, :), 2, 2) *...
+          reshape(A_t(i, :, :), 2, region_size ^ 2);
+
+      V(i, :, :) = reshape(temp(i, :, :), 2, region_size ^ 2) *...
+          reshape(b(i, :, :), region_size ^ 2,1);
+    end
 end
