@@ -8,16 +8,18 @@ function pairs = getRandomPairs(matches, f1, f2)
 %
 % OUTPUT
 % - pairs:   matrix containing random pairs of matching points
-  matches_upperBound = length(matches);
-  random = [5 1 3 7];%ceil(rand(1, floor(rand(1) * matches_upperBound)) * 10);
-  P = length(random)
-  pairs = zeros(P, 4)
-  random_matches = matches(:, random)
- 
-  desc_frame1 = random_matches(1, :)
-  desc_frame2 = random_matches(2, :)
-  pairs(:, 1) = f1(1, desc_frame1)
-  pairs(:, 2) = f1(2, desc_frame1)
-  pairs(:, 3) = f2(1, desc_frame2)
-  pairs(:, 4) = f2(2, desc_frame2)
+
+matches_upperBound = length(matches);
+ceil(rand(1, floor(rand(1) * matches_upperBound)) * 10);
+P = length(random);
+pairs = zeros(P, 4);
+random_matches = matches(:, random);
+
+desc_frame1 = random_matches(1, :);
+desc_frame2 = random_matches(2, :);
+pairs(:, 1) = f1(1, desc_frame1);
+pairs(:, 2) = f1(2, desc_frame1);
+pairs(:, 3) = f2(1, desc_frame2);
+pairs(:, 4) = f2(2, desc_frame2);
+
 end

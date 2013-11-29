@@ -34,7 +34,7 @@ for n = 1:N, % repeat N times
     y_ = pairs(i, 4);
 
     A(i) = [ [x, y, 0, 0, 1, 0]; [ 0, 0, x, y, 0, 1 ] ];
-    b(i) = [ x_, y_]';      
+    b(i) = [ x_, y_]';
   end
 
   xx = pinv(A) * b;
