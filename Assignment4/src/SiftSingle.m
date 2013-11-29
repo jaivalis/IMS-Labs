@@ -7,7 +7,7 @@ classdef SiftSingle
     img_size
     frames
     desc
-    matches
+    matches       % 6 x 2 x random
   end
   
   methods
@@ -20,8 +20,10 @@ classdef SiftSingle
         obj.grayImg = single(rgb2gray( img ));
       end
       obj.img_size = size( obj.grayImg );
+      
+      
     end
     
     
-  end  
+  end
 end
