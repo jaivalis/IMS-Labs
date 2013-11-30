@@ -7,19 +7,22 @@ function pairs = getRandomPairs(matches, f1, f2)
 % - f2:      frames of image2
 %
 % OUTPUT
-% - pairs:   matrix containing random pairs of matching points
+% - pairs:   matrix containing 3 random pairs of matching points
 
-matches_upperBound = length(matches);
-random = ceil(rand(1, floor(rand(1) * matches_upperBound)) * 10);
-P = length(random);
-pairs = zeros(P, 4);
+P = 3;% 3 random samples are enough to determine the rotation required.
+pairs = zeros( P, 4 );
+
+matches_upperBound = length( matches );
+random = randi( matches_upperBound, 1, P );
+
 random_matches = matches(:, random);
 
 desc_frame1 = random_matches(1, :);
 desc_frame2 = random_matches(2, :);
-pairs(:, 1) = f1(1, desc_frame1);
-pairs(:, 2) = f1(2, desc_frame1);
-pairs(:, 3) = f2(1, desc_frame2);
-pairs(:, 4) = f2(2, desc_frame2);
+
+pairs(:, 1) = f1( 1, desc_frame1 ); % x
+pairs(:, 2) = f1( 2, desc_frame1 ); % y
+pairs(:, 3) = f2( 1, desc_frame2 ); % x'
+pairs(:, 4) = f2( 2, desc_frame2 ); % y'
 
 end

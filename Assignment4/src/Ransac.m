@@ -16,6 +16,7 @@ function transfrmdImg = Ransac(img1, img2, matches, f1, f2, N)
 % format [X;Y;S;TH], where X,Y is the (fractional)
 % center of the frame, S is the scale and TH is the
 % orientation (in radians). 
+img_size = size( img1 );
 
 bestInlierCount = 0;
 bestSolution    = zeros(1, 6);
@@ -24,42 +25,32 @@ for n = 1:N, % repeat N times
 
   % get P random pairs from matches.
   pairs = getRandomPairs(matches, f1, f2);  
-  P = length(pairs);
+  [ P, ~ ] = size(pairs); % P = 3
   
-  A = zeros(P * 2, 6);
-  b = zeros(P * 2, 1);
+  A  = zeros(P * 2, 6);
+  b  = zeros(P * 2, 1);
   X  = pairs(:, 1);
   Y  = pairs(:, 2);
   X_ = pairs(:, 3);
   Y_ = pairs(:, 4);
-  
-  for i = 1: P,
-    A(2 * (i-1) + 1, :) = [X(i), Y(i), 0, 0, 1, 0];
-    A(2 * i, :) = [ 0, 0, X(i), Y(i), 0, 1 ];
-    b(2 * (i-1) + 1) = X_(i);
-    b(2 * i) = Y_(i);
+
+  for i = 1:P,
+    A(2 * (i-1) + 1, :) = [ X(i), Y(i), 0, 0, 1, 0 ];
+    A(2 * i, :)         = [ 0, 0, X(i), Y(i), 0, 1 ];
+    b(2 * (i-1) + 1)    = X_(i);
+    b(2 * i)            = Y_(i);
   end
   xx = pinv(A) * b;
 
   % Using the transformation parameters, transform the locations of all
   % T points in image1
   T = transformLocations( matches, f1, xx );
-  figure;
-  %imshowpair(img1, img2, 'montage');
-  img = cat(2, img1, img2);
-  imshow(img);
-  hold on
-  % connecting line between original and transformed points
-  originalPoints(:, 1) = f1(1, matches(1, :));
-  originalPoints(:, 2) = f1(2, matches(1, :));
-  size(originalPoints)
-  size(T)
-  transformedPoints = T + size(img1);
-  plot(originalPoints, transformedPoints, 'b');
-  hold off
-
-  % plot transformation
-
+  
+  for i = 1:P,
+    A_ = A(i);
+    [newCoords] = ( A_ * xx )';
+  end
+  
   % count inliers
   inliers = countInliers( T, matches, f2 );
   
@@ -67,15 +58,27 @@ for n = 1:N, % repeat N times
     bestInlierCount = inliers;
     bestSolution    = xx;
   end
+  
+  % plot transformation
+  concat = cat(2, img1, img2);    concat = concat / 255;
+  figure;    imshow(concat);
+  hold on
+  % connecting line between original and transformed points
+  originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
+  originPoints(:, 2) = f1( 2, matches(1, :) ); % y coordinate
+
+  destinationPoints       = originPoints + T;
+  destinationPoints(:, 2) = destinationPoints(:, 2) + img_size(2); % plus width
+  
+  plot(originPoints, destinationPoints, 'b');
+  hold off
 end
 % end repeat
 
-transfrmdImg = transformImage( img1, bestSolution );
-figure;         imshowpair(img1, img2);
+% transfrmdImg = transformImage( img1, bestSolution );
+% figure;         imshowpair(img1, img2);
 
 end
-
-
 %     random_matches = matches(P);
 %     random_frame1 = frame1(random_matches(:, 1));
 %     random_frame2 = frame2(random_matches(:, 2));
@@ -118,5 +121,3 @@ end
 %     hold on
 %     
 %     hold off
-
-  
