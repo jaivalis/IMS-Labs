@@ -61,16 +61,20 @@ for n = 1:N, % repeat N times
   
   % plot transformation
   concat = cat(2, img1, img2);    concat = concat / 255;
-  figure;    imshow(concat);
+ 
+  fig = figure;    imshow(concat);
+  %set(gca,'YDir','reverse');
   hold on
   % connecting line between original and transformed points
   originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
   originPoints(:, 2) = f1( 2, matches(1, :) ); % y coordinate
 
   destinationPoints       = originPoints + T;
-  destinationPoints(:, 2) = destinationPoints(:, 2) + img_size(2); % plus width
+  destinationPoints(:, 1) = destinationPoints(:, 1) + img_size(2); % plus width
   
-  plot(originPoints, destinationPoints, 'b');
+  plot(originPoints(:, 1), originPoints(:, 2), 'ro');
+  plot(destinationPoints(:, 1), destinationPoints(:, 2), 'go');
+%  plot([originPoints(:, 1) originPoints(:, 2)], [destinationPoints(:, 1) destinationPoints(:, 2) ], 'b');
   hold off
 end
 % end repeat
