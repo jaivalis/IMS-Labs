@@ -10,7 +10,7 @@ function pairs = getRandomPairs(matches, f1, f2)
 % - pairs:   matrix containing random pairs of matching points
 
 matches_upperBound = length(matches);
-ceil(rand(1, floor(rand(1) * matches_upperBound)) * 10);
+random = ceil(rand(1, floor(rand(1) * matches_upperBound)) * 10);
 P = length(random);
 pairs = zeros(P, 4);
 random_matches = matches(:, random);

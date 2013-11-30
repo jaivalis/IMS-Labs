@@ -28,7 +28,9 @@ desc2 = I(2).desc;
 frame2 = I(2).frames;
 
 [ matches, scores ] = vl_ubcmatch(desc1, desc2);
-Ransac(I, 1, 2, matches, frame1, frame2, 2)
+img1 = I(1).grayImg;
+img2 = I(2).grayImg;
+Ransac(img1, img2, matches, frame1, frame2, 2);
 
 % comparissons = 1:length(I);
 % for i = comparissons,

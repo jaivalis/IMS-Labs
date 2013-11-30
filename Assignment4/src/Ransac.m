@@ -21,11 +21,13 @@ bestInlierCount = 0;
 bestSolution    = zeros(1, 6);
 
 for n = 1:N, % repeat N times    
-  A = zeros(P, 6, 2);
-  b = zeros(P, 2);
 
-  % get p random pairs from matches.
-  pairs = getRandomPairs(matches, f1, f2, P);
+  % get P random pairs from matches.
+  pairs = getRandomPairs(matches, f1, f2);  
+  P = length(pairs);
+  
+  A = zeros(P, 2, 6);
+  b = zeros(P, 2);
 
   for i = 1:P,
     x  = pairs(i, 1);
@@ -33,29 +35,29 @@ for n = 1:N, % repeat N times
     x_ = pairs(i, 3);
     y_ = pairs(i, 4);
 
-    A(i) = [ [x, y, 0, 0, 1, 0]; [ 0, 0, x, y, 0, 1 ] ];
-    b(i) = [ x_, y_]';
+    A(i, :, :) = [ [x, y, 0, 0, 1, 0]; [ 0, 0, x, y, 0, 1 ] ];
+    b(i, :) = [ x_, y_]';
   end
 
   xx = pinv(A) * b;
 
   % Using the transformation parameters, transform the locations of all
   % T points in image1
-  T = transformImg(img1, xx);
+  T = transformImg( matches, f1, xx );
 
   % plot transformation
 
   % count inliers
-  inliers = countInliers(T, img2);
+  inliers = countInliers( T, matches, f2 );
   
   if inliers > bestInlierCount,
-    bestInlierCount = inliers;
+    bestInlierCount = inliers
     bestSolution    = xx;
   end
 end
 % end repeat
 
-transfrmdImg = transformImg(img1, bestSolution);
+transfrmdImg = transformImg( matches, f1, bestSolution );
 
 end
     

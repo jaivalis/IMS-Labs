@@ -1,4 +1,4 @@
-function inliers = countInliers( T, matches, f2, base )
+function inliers = countInliers( T, matches, f2 )
 %COUNTINLIERS counts the number of inliers
 %   Inliers are defined as the number of transformed points from image T 
 % that lie within a 10 pixel radius from their pair in img.
@@ -11,7 +11,6 @@ function inliers = countInliers( T, matches, f2, base )
 % OUTPUT
 % - inliers: scalar, count of inliers
 
-sizeT = size( T );
 inliers = 0;
 
 for i = 1:T,
