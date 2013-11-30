@@ -34,19 +34,16 @@ for n = 1:N, % repeat N times
   Y_ = pairs(:, 4);
   
   for i = 1: P,
-
     A(2 * (i-1) + 1, :) = [X(i), Y(i), 0, 0, 1, 0];
-    A(2 * i, :) = [ 0, 0, X(i), Y(i), 0, 1 ] ;
+    A(2 * i, :) = [ 0, 0, X(i), Y(i), 0, 1 ];
     b(2 * (i-1) + 1) = X_(i);
     b(2 * i) = Y_(i);
   end
-  size(A)
-  size(b)
   xx = pinv(A) * b;
 
   % Using the transformation parameters, transform the locations of all
   % T points in image1
-  T = transformImg( matches, f1, xx );
+  T = transformLocations( matches, f1, xx );
 
   % plot transformation
 
@@ -54,17 +51,17 @@ for n = 1:N, % repeat N times
   inliers = countInliers( T, matches, f2 );
   
   if inliers > bestInlierCount,
-    bestInlierCount = inliers
+    bestInlierCount = inliers;
     bestSolution    = xx;
   end
 end
 % end repeat
 
-transfrmdImg = transformImg( matches, f1, bestSolution );
+transfrmdImg = transformImage( img1, bestSolution );
+figure;         imshowpair(img1, img2);
 
 end
-    
-    
+
 
 %     random_matches = matches(P);
 %     random_frame1 = frame1(random_matches(:, 1));
