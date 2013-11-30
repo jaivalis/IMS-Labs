@@ -26,19 +26,22 @@ for n = 1:N, % repeat N times
   pairs = getRandomPairs(matches, f1, f2);  
   P = length(pairs);
   
-  A = zeros(P, 2, 6);
-  b = zeros(P, 2);
+  A = zeros(P * 2, 6);
+  b = zeros(P * 2, 1);
+  X  = pairs(:, 1);
+  Y  = pairs(:, 2);
+  X_ = pairs(:, 3);
+  Y_ = pairs(:, 4);
+  
+  for i = 1: P,
 
-  for i = 1:P,
-    x  = pairs(i, 1);
-    y  = pairs(i, 2);
-    x_ = pairs(i, 3);
-    y_ = pairs(i, 4);
-
-    A(i, :, :) = [ [x, y, 0, 0, 1, 0]; [ 0, 0, x, y, 0, 1 ] ];
-    b(i, :) = [ x_, y_]';
+    A(2 * (i-1) + 1, :) = [X(i), Y(i), 0, 0, 1, 0];
+    A(2 * i, :) = [ 0, 0, X(i), Y(i), 0, 1 ] ;
+    b(2 * (i-1) + 1) = X_(i);
+    b(2 * i) = Y_(i);
   end
-
+  size(A)
+  size(b)
   xx = pinv(A) * b;
 
   % Using the transformation parameters, transform the locations of all
