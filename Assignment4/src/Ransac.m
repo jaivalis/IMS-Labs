@@ -44,6 +44,19 @@ for n = 1:N, % repeat N times
   % Using the transformation parameters, transform the locations of all
   % T points in image1
   T = transformLocations( matches, f1, xx );
+  figure;
+  %imshowpair(img1, img2, 'montage');
+  img = cat(2, img1, img2);
+  imshow(img);
+  hold on
+  % connecting line between original and transformed points
+  originalPoints(:, 1) = f1(1, matches(1, :));
+  originalPoints(:, 2) = f1(2, matches(1, :));
+  size(originalPoints)
+  size(T)
+  transformedPoints = T + size(img1);
+  plot(originalPoints, transformedPoints, 'b');
+  hold off
 
   % plot transformation
 
