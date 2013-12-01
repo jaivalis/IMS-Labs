@@ -63,7 +63,6 @@ for n = 1:N, % repeat N times
   concat = cat(2, img1, img2);    concat = concat / 255;
  
   fig = figure;    imshow(concat);
-  %set(gca,'YDir','reverse');
   hold on
   % connecting line between original and transformed points
   originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
@@ -74,7 +73,13 @@ for n = 1:N, % repeat N times
   
   plot(originPoints(:, 1), originPoints(:, 2), 'ro');
   plot(destinationPoints(:, 1), destinationPoints(:, 2), 'go');
-%  plot([originPoints(:, 1) originPoints(:, 2)], [destinationPoints(:, 1) destinationPoints(:, 2) ], 'b');
+  % maybe without loop?
+  % only every 20th line, otherwise it's a mess
+  for i=1:20:length(destinationPoints),
+    plot([originPoints(i, 1) destinationPoints(i, 1)], [originPoints(i, 2) destinationPoints(i, 2) ], 'b');
+  end
+  % connects all points
+%   plot([originPoints(:, 1) destinationPoints(:, 1)], [originPoints(:, 2) destinationPoints(:, 2) ], 'b');
   hold off
 end
 % end repeat
