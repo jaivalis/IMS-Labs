@@ -13,6 +13,7 @@ function [inlierSet, inliers] = countInliers( T, matches, f2 )
 % - inlierSet: set of inliers
 
 inliers = 0;
+inlierSet = zeros(2,2);
 
 for i = 1:T,
   % [X;Y;S;TH], where X,Y is the (fractional) center of the frame, S is the 
