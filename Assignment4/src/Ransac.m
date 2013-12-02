@@ -72,15 +72,15 @@ for n = 1:N, % repeat N times
   % connecting line between original and transformed points
   originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
   originPoints(:, 2) = f1( 2, matches(1, :) ); % y coordinate
-
-  destinationPoints       = originPoints + T;
+  
+  destinationPoints       = T;
   destinationPoints(:, 1) = destinationPoints(:, 1) + img_size(2); % plus width
   
-  plot(originPoints(:, 1), originPoints(:, 2), 'ro');
-  plot(destinationPoints(:, 1), destinationPoints(:, 2), 'go');
+  plot(originPoints(1:25:end, 1), originPoints(1:25:end, 2), 'ro');
+  plot(destinationPoints(1:25:end, 1), destinationPoints(1:25:end, 2), 'go');
   % maybe without loop?
   % only every 20th line, otherwise it's a mess
-  for i=1:20:length(destinationPoints),
+  for i=1:25:length(destinationPoints),
     plot([originPoints(i, 1) destinationPoints(i, 1)], [originPoints(i, 2) destinationPoints(i, 2) ], 'b');
   end
   % connects all points

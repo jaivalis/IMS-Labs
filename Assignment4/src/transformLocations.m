@@ -24,10 +24,10 @@ for i = 1:length(matches),
   x = frame( 1, matches(1, i) );
   y = frame( 2, matches(1, i) );
   
-  z = M * [ x; y ] + t;
+  z = M * [ x; y ];
   
-  transfrm(i, 1) = z( 1 );
-  transfrm(i, 2) = z( 2 );
+  transfrm(i, 1) = z( 1 ) + t1;
+  transfrm(i, 2) = z( 2 ) + t2;
 end
 
 end
