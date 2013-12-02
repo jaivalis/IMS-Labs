@@ -90,8 +90,8 @@ end
 % end repeat
 
 % our solution:
-transfrmdImg = transformImage( img1, bestSolution );
-% figure;         imshowpair(img1, transfrmdImg, 'montage');
+transfrmdImg = transformImage( img2, bestSolution );
+figure;         imshowpair(img1, transfrmdImg, 'montage');
 
 % built-in image transformation solution:
 % reshape bestSolution

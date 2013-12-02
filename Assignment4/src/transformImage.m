@@ -14,24 +14,18 @@ function trnsfrmd = transformImage( img, x )
                   x(5), x(6), 1];
   
   [ height, width ] = size(img);
-  im_translated = zeros( height, width, 1 );
+  trnsfrmd = zeros( height, width, 1 );
   
-  for x = 1:height,
-    for y = 1:width,
-      xOrigin = x;
-      yOrigin = y;
+  for i = 1:height
+    for j = 1:width
+      % Applying affine transformation
+      new_coord = Sol_reshaped * [i; j; 1];
 
-      tmp = double([img(x) img(y) 1]) * double( Sol_reshaped );
-      xDest = round( tmp(1) );
-      yDest = round( tmp(2) );
-      
-      if xDest < 1 || yDest < 1% || xDest > 2 * height || yDest > 2 * width
-        continue;
+      % Nearest-Neighbor interpolation for placing new pixels
+      if(round(new_coord(1)) > 0 && round(new_coord(2)) > 0)
+          trnsfrmd(round(new_coord(1)), round(new_coord(2))) = img(i,j);
       end
-      im_translated( xDest, yDest ) = img( xOrigin, yOrigin );
     end
   end
-
-  trnsfrmd = im_translated;% / 255;
-
+  
 end
