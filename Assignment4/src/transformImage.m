@@ -1,4 +1,4 @@
-function trnsfrmd = transfomrImage( img, x )
+function trnsfrmd = transformImage( img, x )
 %TRANSFORMIMAGE Performs a transformation of an image given the parameters
 %   Detailed explanation goes here
 %
@@ -8,25 +8,30 @@ function trnsfrmd = transfomrImage( img, x )
 % 
 % OUTPUT
 % - trnsfrmd: Transformed image
-
 % reshape bestSolution
-Sol_reshaped = [x(1), x(2) 0;...
-                x(3), x(4) 0;...
-                x(5), x(6) 1];
+  Sol_reshaped = [x(1), x(2), 0; ...
+                  x(3), x(4), 0; ...
+                  x(5), x(6), 1];
   
-  size_img = size(img1);
-  im_translated = zeros(size_img(1), size_img(2), 1);
+  [ height, width ] = size(img);
+  im_translated = zeros( height, width, 1 );
   
-  for x=1:size_img(1)
-    for y =1:size_img(2)
-      temp = double([img2(x) img2(y) 1]) * double(Sol_reshaped);
-%       [u, v] = getNearestPixel(temp(1),temp(2));
-      im_translated(round(temp(1)),round(temp(2))) = img2(x,y);
+  for x = 1:height,
+    for y = 1:width,
+      xOrigin = x;
+      yOrigin = y;
+
+      tmp = double([img(x) img(y) 1]) * double( Sol_reshaped );
+      xDest = round( tmp(1) );
+      yDest = round( tmp(2) );
+      
+      if xDest < 1 || yDest < 1% || xDest > 2 * height || yDest > 2 * width
+        continue;
+      end
+      im_translated( xDest, yDest ) = img( xOrigin, yOrigin );
     end
   end
 
-
-trnsfrmd = im_translated;
+  trnsfrmd = im_translated;% / 255;
 
 end
-
