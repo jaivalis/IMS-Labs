@@ -27,6 +27,10 @@ for n = 1:N, % repeat N times
   pairs = getRandomPairs(matches, f1, f2);  
   [ P, ~ ] = size(pairs); % P = 3
   
+  % How many matches do we need to solve an affine transformation which
+  % can be formulated as shown in Figure 1?
+  % Answer: we need at least 3 points.
+  
   A  = zeros(P * 2, 6);
   b  = zeros(P * 2, 1);
   X  = pairs(:, 1);
