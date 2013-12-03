@@ -21,12 +21,21 @@ for i=1:image_count,
   I(i).desc           = desc;
 end
 
+% TESTING images (1,2)
+% desc1 = I(1).desc;
+% frame1 = I(1).frames;
+% desc2 = I(2).desc;
+% frame2 = I(2).frames;
+% [ matches, scores ] = vl_ubcmatch(desc1, desc2);
+% img1 = I(1).grayImg;
+% img2 = I(2).grayImg;
+% Ransac(img1, img2, matches, frame1, frame2, 2);
 
-desc1 = I(1).desc;
-frame1 = I(1).frames;
-desc2 = I(2).desc;
-frame2 = I(2).frames;
-
+% TESTING images (2,3)
+desc1 = I(2).desc;
+frame1 = I(2).frames;
+desc2 = I(3).desc;
+frame2 = I(3).frames;
 [ matches, scores ] = vl_ubcmatch(desc1, desc2);
 img1 = I(1).grayImg;
 img2 = I(2).grayImg;

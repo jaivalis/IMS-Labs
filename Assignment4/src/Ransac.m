@@ -50,11 +50,6 @@ for n = 1:N, % repeat N times
   % T points in image1
   T = transformLocations( matches, f1, xx );
   
-  for i = 1:P,
-    A_ = A(i);
-    [newCoords] = ( A_ * xx )';
-  end
-  
   % count inliers
   [inlierSet, inliers] = countInliers( T, matches, f2 );
   
@@ -67,7 +62,7 @@ for n = 1:N, % repeat N times
   % plot transformation
   concat = cat(2, img1, img2);    concat = concat / 255;
  
-  fig = figure;    imshow(concat);
+  figure;    imshow(concat, 'InitialMagnification', 50);
   hold on
   % connecting line between original and transformed points
   originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
@@ -83,8 +78,6 @@ for n = 1:N, % repeat N times
   for i=1:25:length(destinationPoints),
     plot([originPoints(i, 1) destinationPoints(i, 1)], [originPoints(i, 2) destinationPoints(i, 2) ], 'b');
   end
-  % connects all points
-%   plot([originPoints(:, 1) destinationPoints(:, 1)], [originPoints(:, 2) destinationPoints(:, 2) ], 'b');
   hold off
 end
 % end repeat
@@ -95,8 +88,8 @@ figure;         imshowpair(img1, transfrmdImg, 'montage');
 
 % built-in image transformation solution:
 % reshape bestSolution
-Sol_reshaped = [bestSolution(1), bestSolution(2) 0;...
-                bestSolution(3), bestSolution(4) 0;...
+Sol_reshaped = [bestSolution(1), bestSolution(2) 0; ...
+                bestSolution(3), bestSolution(4) 0; ...
                 bestSolution(5), bestSolution(6) 1];
               
 form    = maketform('affine', Sol_reshaped);
