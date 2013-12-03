@@ -47,4 +47,20 @@ function trnsfrmd = transformImage( img, x )
       end
     end
   end
+  for i = 1:size(trnsfrmd,1),
+    for j = 1:size(trnsfrmd,2),
+      if i + 1 < size(trnsfrmd,1)
+        if trnsfrmd(i,j) == 0
+          trnsfrmd(i,j) = trnsfrmd(i + 1, j);
+          continue;
+        end
+      end
+      if j + 1 < size(trnsfrmd,2)
+        if trnsfrmd(i,j) == 0
+          trnsfrmd(i,j) = trnsfrmd(i, j + 1);
+        end
+      end
+    end
+  end
+  
 end

@@ -1,4 +1,4 @@
-function transfrmdImg = Ransac(img1, img2, matches, f1, f2, N)
+function transfrmdImg = Ransac(img1, img2, matches, f1, f2, N, plotFig)
 % RANSAC implementation of the Ransac algorithm
 %
 % INPUT
@@ -59,42 +59,45 @@ for n = 1:N, % repeat N times
     bestInlierSet   = inlierSet;
   end
   
-  % plot transformation
-  concat = cat(2, img1, img2);    concat = concat / 255;
- 
-  figure;    imshow(concat, 'InitialMagnification', 50);
-  hold on
-  % connecting line between original and transformed points
-  originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
-  originPoints(:, 2) = f1( 2, matches(1, :) ); % y coordinate
-  
-  destinationPoints       = T;
-  destinationPoints(:, 1) = destinationPoints(:, 1) + img_size(2); % plus width
-  
-  plot(originPoints(1:25:end, 1), originPoints(1:25:end, 2), 'ro');
-  plot(destinationPoints(1:25:end, 1), destinationPoints(1:25:end, 2), 'go');
-  % maybe without loop?
-  % only every 20th line, otherwise it's a mess
-  for i=1:25:length(destinationPoints),
-    plot([originPoints(i, 1) destinationPoints(i, 1)], [originPoints(i, 2) destinationPoints(i, 2) ], 'b');
+  if plotFig
+    % plot transformation
+    concat = cat(2, img1, img2);    concat = concat / 255;
+    figure;    imshow(concat, 'InitialMagnification', 50);
+    hold on
+    % connecting line between original and transformed points
+    originPoints(:, 1) = f1( 1, matches(1, :) ); % x coordinate
+    originPoints(:, 2) = f1( 2, matches(1, :) ); % y coordinate
+
+    destinationPoints       = T;
+    destinationPoints(:, 1) = destinationPoints(:, 1) + img_size(2); % plus width
+
+    plot(originPoints(1:25:end, 1), originPoints(1:25:end, 2), 'ro');
+    plot(destinationPoints(1:25:end, 1), destinationPoints(1:25:end, 2), 'go');
+    % maybe without loop?
+    % only every 20th line, otherwise it's a mess
+    for i=1:25:length(destinationPoints),
+      plot([originPoints(i, 1) destinationPoints(i, 1)], [originPoints(i, 2) destinationPoints(i, 2) ], 'b');
+    end
+    hold off
   end
-  hold off
 end
 % end repeat
 
 % our solution:
 transfrmdImg = transformImage( img2, bestSolution );
-figure;         imshowpair(img1, transfrmdImg, 'montage');
+if plotFig
+  figure;         imshowpair(img1, transfrmdImg, 'montage');
 
-% built-in image transformation solution:
-% reshape bestSolution
-Sol_reshaped = [bestSolution(1), bestSolution(2) 0; ...
-                bestSolution(3), bestSolution(4) 0; ...
-                bestSolution(5), bestSolution(6) 1];
-              
-form    = maketform('affine', Sol_reshaped);
-builtin = imtransform(img2, form);
+  % built-in image transformation solution:
+  % reshape bestSolution
+  Sol_reshaped = [bestSolution(1), bestSolution(2) 0; ...
+                  bestSolution(3), bestSolution(4) 0; ...
+                  bestSolution(5), bestSolution(6) 1];
 
-figure;         imshowpair(img1, builtin, 'montage');      
+  form    = maketform('affine', Sol_reshaped);
+  builtin = imtransform(img2, form);
+
+  figure;         imshowpair(img1, builtin, 'montage');      
+end
 
 end
