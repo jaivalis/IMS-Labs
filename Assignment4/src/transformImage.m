@@ -14,24 +14,36 @@ function trnsfrmd = transformImage( img, x )
   [ height, width ] = size(img);
   trnsfrmd = zeros( height, width, 1 );
   
-  shiftedPixels = 0;
+  sShiftedPixels = 0; % sideways shifted pixels
+  vShiftedPixels = 0; % vertical shifted pixels
   for i = 1:height,
     for j = 1:width,
       % Applying affine transformation
       new_coord = Sol_reshaped * [i; j; 1];
 
       % Nearest-Neighbor interpolation for placing new pixels
-      xTarget = round( new_coord(1) );
-      yTarget = round( new_coord(2) ) + shiftedPixels;
+      xTarget = round( new_coord(1) ) + vShiftedPixels;
+      yTarget = round( new_coord(2) ) + sShiftedPixels;
 
       if xTarget > 0 && yTarget > 0
         trnsfrmd( xTarget, yTarget ) = img( i, j );
       else
-        [ currHeight, ~ ] = size( trnsfrmd );        
-        shiftedPixels  = shiftedPixels + abs(yTarget);
-        % Shift the picture to the right & resize
-        trnsfrmd = cat( 2, zeros( currHeight, abs(yTarget) ), trnsfrmd );        
-        trnsfrmd( xTarget, 1 ) = img( i, j );
+        if ~(yTarget > 0)
+          [ currHeight, ~ ] = size( trnsfrmd );        
+          sShiftedPixels  = sShiftedPixels + abs(yTarget);
+          % Shift the picture to the right & resize
+          trnsfrmd = cat( 2, zeros( currHeight, abs(yTarget) ), trnsfrmd );        
+          trnsfrmd( xTarget, 1 ) = img( i, j );
+%           continue;
+        end
+        if ~(xTarget > 0)
+          [ ~ , currWidth ] = size( trnsfrmd );        
+          vShiftedPixels  = vShiftedPixels + abs(xTarget);
+          % Shift the picture downwards & resize
+          trnsfrmd = cat( 1, zeros( abs(xTarget), currWidth ), trnsfrmd );        
+          trnsfrmd( 1, yTarget ) = img( i, j );
+%           continue;
+        end
       end
     end
   end

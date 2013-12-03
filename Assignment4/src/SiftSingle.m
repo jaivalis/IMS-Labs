@@ -20,8 +20,6 @@ classdef SiftSingle
         obj.grayImg = single(rgb2gray( img ));
       end
       obj.img_size = size( obj.grayImg );
-      
-      
     end
     
     
