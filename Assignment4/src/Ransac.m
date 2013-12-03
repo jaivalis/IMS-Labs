@@ -1,4 +1,4 @@
-function transfrmdImg = Ransac(img1, img2, matches, f1, f2, N, plotFig)
+function [transfrmdImg, Sol_reshaped] = Ransac(img1, img2, matches, f1, f2, N, plotFig)
 % RANSAC implementation of the Ransac algorithm
 %
 % INPUT
@@ -8,9 +8,11 @@ function transfrmdImg = Ransac(img1, img2, matches, f1, f2, N, plotFig)
 % - f1:      frames of image1
 % - f2:      frames of image2
 % - N:       the number of repetitions for the algorithm
+% - plotFig: boolean to surpress plots
 % 
 % OUTPUT not sure yet
 % - transfrmdImg: the most accurate transformation of the image achieved
+% - Sol_reshaped: transformation parameters
 
 % Each column of F is a feature frame and has the
 % format [X;Y;S;TH], where X,Y is the (fractional)
@@ -85,15 +87,14 @@ end
 
 % our solution:
 transfrmdImg = transformImage( img2, bestSolution );
+% reshape bestSolution
+  Sol_reshaped = [bestSolution(1), bestSolution(2) 0; ...
+                  bestSolution(3), bestSolution(4) 0; ...
+                  bestSolution(5), bestSolution(6) 1];
 if plotFig
   figure;         imshowpair(img1, transfrmdImg, 'montage');
 
   % built-in image transformation solution:
-  % reshape bestSolution
-  Sol_reshaped = [bestSolution(1), bestSolution(2) 0; ...
-                  bestSolution(3), bestSolution(4) 0; ...
-                  bestSolution(5), bestSolution(6) 1];
-
   form    = maketform('affine', Sol_reshaped);
   builtin = imtransform(img2, form);
 
