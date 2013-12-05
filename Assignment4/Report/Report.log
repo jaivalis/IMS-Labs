@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.4.28)  5 DEC 2013 14:36
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.4.28)  5 DEC 2013 14:40
 entering extended mode
 **Report.tex
 (C:\Users\T\Documents\GitHub\IMS-Labs\Assignment4\Report\Report.tex
@@ -600,7 +600,7 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-No file Report.aux.
+(C:\Users\T\Documents\GitHub\IMS-Labs\Assignment4\Report\Report.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
@@ -613,6 +613,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
+
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count136
@@ -642,13 +643,6 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
  [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-
-LaTeX Warning: Reference `affine' on page 2 undefined on input line 47.
-
-
-LaTeX Warning: Reference `side_by_side' on page 2 undefined on input line 47.
-
-
 Overfull \hbox (65.98476pt too wide) in paragraph at lines 43--49
 \OT1/cmr/m/n/10.95 mented for one thing, for an-other thing the Mat-lab built-i
 n func-tions \OT1/cmtt/m/n/10.95 maketform('affine'
@@ -660,11 +654,10 @@ Overfull \hbox (26.3519pt too wide) in paragraph at lines 43--49
  to our \OT1/cmtt/m/n/10.95 transformImage()
  []
 
-<../out/Comparing1_2.jpg, id=15, 1205.50375pt x 904.37875pt>
-File: ../out/Comparing1_2.jpg Graphic file (type jpg)
-
-<use ../out/Comparing1_2.jpg>
-Package pdftex.def Info: ../out/Comparing1_2.jpg used on input line 52.
+<Comparing1_2.jpg, id=15, 1205.50375pt x 904.37875pt>
+File: Comparing1_2.jpg Graphic file (type jpg)
+ <use Comparing1_2.jpg>
+Package pdftex.def Info: Comparing1_2.jpg used on input line 52.
 (pdftex.def)             Requested size: 482.19296pt x 361.7451pt.
 
 Overfull \hbox (122.19296pt too wide) in paragraph at lines 52--53
@@ -687,13 +680,10 @@ Overfull \hbox (88.97432pt too wide) in paragraph at lines 60--61
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-LaTeX Warning: Reference `stitched' on page 2 undefined on input line 67.
-
-<../out/stich.jpg, id=17, 1205.50375pt x 904.37875pt>
-File: ../out/stich.jpg Graphic file (type jpg)
- <use ../out/stich.jpg>
-Package pdftex.def Info: ../out/stich.jpg used on input line 71.
+<stich.jpg, id=17, 1205.50375pt x 904.37875pt>
+File: stich.jpg Graphic file (type jpg)
+ <use stich.jpg>
+Package pdftex.def Info: stich.jpg used on input line 71.
 (pdftex.def)             Requested size: 482.19296pt x 361.7451pt.
 
 Overfull \hbox (122.19296pt too wide) in paragraph at lines 71--72
@@ -703,37 +693,30 @@ Overfull \hbox (122.19296pt too wide) in paragraph at lines 71--72
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[2] [3 <C:/Users/T/Documents/GitHub/IMS-Labs/Assignment4/out/Comparing1_2.jpg>]
-[4 <C:/Users/T/Documents/GitHub/IMS-Labs/Assignment4/Report/side_by_side.jpg>]
-[5 <C:/Users/T/Documents/GitHub/IMS-Labs/Assignment4/out/stich.jpg>]
-(C:\Users\T\Documents\GitHub\IMS-Labs\Assignment4\Report\Report.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[2] [3 <C:/Users/T/Documents/GitHub/IMS-Labs/Assignment4/Report/Comparing1_2.jp
+g>] [4 <C:/Users/T/Documents/GitHub/IMS-Labs/Assignment4/Report/side_by_side.jp
+g>] [5 <C:/Users/T/Documents/GitHub/IMS-Labs/Assignment4/Report/stich.jpg>]
+(C:\Users\T\Documents\GitHub\IMS-Labs\Assignment4\Report\Report.aux) ) 
 Here is how much of TeX's memory you used:
- 18027 strings out of 493921
- 438397 string characters out of 3144888
+ 18026 strings out of 493921
+ 438442 string characters out of 3144888
  571769 words of memory out of 3000000
- 20964 multiletter control sequences out of 15000+200000
- 11548 words of font info for 42 fonts, out of 3000000 for 9000
+ 20963 multiletter control sequences out of 15000+200000
+ 11240 words of font info for 41 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  70i,8n,76p,725b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Prog
-ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program 
-Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program File
-s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files (x
-86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86
-)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Report.pdf (5 pages, 520930 bytes).
+<C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program
+ Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files
+ (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Report.pdf (5 pages, 511647 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
+ 56 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  28 words of extra memory for PDF output out of 10000 (max. 10000000)
 
