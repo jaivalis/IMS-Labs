@@ -3,3 +3,8 @@
 sift-*.tar.gz
 
 Assignment3/out/*
+
+# latex crap files
+*.aux
+*.log
+*.synctex.gz
