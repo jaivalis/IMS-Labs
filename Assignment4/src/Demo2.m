@@ -45,5 +45,11 @@ end
 
 
 %     
-figure;
+fig = figure;
+subplot(2,2,1);
+imshow(left/255);
+subplot(2,2,2);
+imshow(right/255);
+subplot(2,2,3);
 imshow(outputImg/255);
+saveas(fig, '../report/stich.jpg');
