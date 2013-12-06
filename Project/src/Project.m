@@ -1,4 +1,11 @@
-test = visualVocabulary(4);
+
+% Create vocabulary, get used descriptors
+vocabulary_sizes = [400, 800, 1600, 2000, 4000];
+[ voc, descs ] = visualVocabulary( 4, 100, vocabulary_sizes(1) );
+
+
+
+quantisizeFeatures ( voc );
 % img = imread('../data/airplanes_train/img001.jpg');
 % img1 = rgb2gray(img(:,:,1));
 % img2 = rgb2gray(img(:,:,2));
