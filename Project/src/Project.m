@@ -5,7 +5,7 @@ vocabulary_sizes = [400, 800, 1600, 2000, 4000];
 
 
 
-quantisizeFeatures ( voc );
+bag = quantizeFeatures ( voc , descs);
 % img = imread('../data/airplanes_train/img001.jpg');
 % img1 = rgb2gray(img(:,:,1));
 % img2 = rgb2gray(img(:,:,2));

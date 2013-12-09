@@ -49,4 +49,5 @@ function [ voc, descs ] = visualVocabulary( picCount, descCount, vocSize )
   end
   % run k-means clustering
   voc = vl_kmeans(desc_all, vocSize);
+  
 end
