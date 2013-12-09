@@ -1,5 +1,5 @@
-function [ voc, descs ] = visualVocabulary( picCount, descCount, vocSize )
-% VISUALVOCABULARY
+function [ voc, images ] = visualVocabulary( picCount, descCount, vocSize )
+% VISUALVOCABULARY2
 % INPUT
 % - picCount:  count of sample pictures (if -1 will take all folder contents)
 % - descCount: count of descriptors to take per sample image
@@ -14,40 +14,30 @@ function [ voc, descs ] = visualVocabulary( picCount, descCount, vocSize )
   
   trainingFolders = dir ( fullfile ('..', 'data', '*_train') );
   
-  descs = zeros ( length(trainingFolders) * picCount, 128, descCount );
-  d = 1; % pictures processed (index for descs)
-  
-  for fNumber = 1:length( trainingFolders ), % for each training folder
+  classLabel = 1; imgIndex = 1;
+  for fNum = 1:length( trainingFolders ), % for each training folder
     
-    folderName = trainingFolders( fNumber ).name;
+    folderName = trainingFolders( fNum ).name;
     pictures = dir( fullfile('..', 'data', folderName, '*.jpg') );
     
     if picCount == -1, % include all the pictures
       picCount = length( pictures );
     end
     
-    for pNumber = 1:picCount,
-      pPath = fullfile('..', 'data', folderName, pictures(pNumber).name );
+    for pNum = 1:picCount,
+      pPath = fullfile('..', 'data', folderName, pictures(pNum).name );
       img = imread( pPath );
-      % TODO split image into 3 channels and do the following 3 times
+        
+      si = SiftImage(img, classLabel, descCount);
       
-      % extract SIFT descriptors (image must be SINGLE and grayscale)
-      [ ~, desc ] = vl_dsift(im2single(rgb2gray(img)));
+      images( imgIndex ) = si;
       
-      % select descCount dense descriptors randomly
-      r = randi(size(descs(d, :, :), 2), 1, descCount);
+      desc_all = cat(2, desc_all, double( si.sampleDescs ));
       
-      % store the descriptor
-      descs(d, :, :) = desc(:, r);
-      
-      % append features
-      desc_all = cat(2, desc_all, double( desc(:, r) ));
-      
-      d = d + 1;
+      imgIndex = imgIndex + 1;
     end
-    
+    classLabel = classLabel + 1; % new folder > new class
   end
   % run k-means clustering
-  voc = vl_kmeans(desc_all, vocSize);
-  
+  voc = vl_kmeans(desc_all, vocSize);  
 end

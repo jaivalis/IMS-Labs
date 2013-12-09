@@ -1,22 +1,13 @@
 
 % Create vocabulary, get used descriptors
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
-[ voc, descs ] = visualVocabulary( 4, 100, vocabulary_sizes(1) );
+[ voc, images ]  = visualVocabulary ( 4, 100, vocabulary_sizes(1) );
+fprintf( 'visual vocabulary built\n' );
 
-b_o_w = quantizeFeatures ( voc , descs );
+images = quantizeFeatures ( voc , images );
+fprintf( 'quantizing features done\n' );
 
-generateHistogram( b_o_w );
-% img = imread('../data/airplanes_train/img001.jpg');
-% img1 = rgb2gray(img(:,:,1));
-% img2 = rgb2gray(img(:,:,2));
-% img3 = rgb2gray(img(:,:,3));
-% 
-% figure;
-% imshow(img1);
-% figure;
-% imshow(img2);
-% figure;
-% imshow(img3);
+generateHistogram( images );
 
 % use sift for every channel and evaluate best way to use sift
 
