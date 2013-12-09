@@ -16,5 +16,6 @@ function generateHistogram( images )
     hist( image.bagOfWords );
   end
   hold off;
+
 end
 
