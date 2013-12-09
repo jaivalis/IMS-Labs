@@ -10,6 +10,6 @@ fprintf( 'quantizing features done\n' );
 generateHistogram( images );
 
 % use sift for every channel and evaluate best way to use sift
-
+%
 % take 100 dense descriptors randomly or k-sift
 % use the best(fastest) one
