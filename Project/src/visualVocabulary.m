@@ -6,7 +6,7 @@ function [ voc, descs ] = visualVocabulary( picCount, descCount, vocSize )
 % - vocSize:   count of visual words the vocabulary will contain
 %
 % OUTPUT
-% - voc:
+% - voc:   
 % - descs: Matrix containing randomly selected descriptors for all pictures
 % - 
 % algorithm: http://cs.brown.edu/courses/cs143/2011/results/proj3/georgem/

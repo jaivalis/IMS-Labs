@@ -3,9 +3,9 @@
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
 [ voc, descs ] = visualVocabulary( 4, 100, vocabulary_sizes(1) );
 
+b_o_w = quantizeFeatures ( voc , descs );
 
-
-bag = quantizeFeatures ( voc , descs);
+generateHistogram( b_o_w );
 % img = imread('../data/airplanes_train/img001.jpg');
 % img1 = rgb2gray(img(:,:,1));
 % img2 = rgb2gray(img(:,:,2));

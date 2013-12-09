@@ -1,31 +1,39 @@
-function bag_of_words = quantizeFeatures( voc , descs)
-% QUANTISIZEFEATURES 
-%   represent each image as a collection of visual words
-%   extracts feature descriptors (SIFT) and then assign each descriptor to
-%   the closest visual word from the vocabulary.
+function b_o_w = quantizeFeatures( voc , descs )
+% QUANTIZEFEATURES Represent each image as a collection of visual words
+%   For each descriptor per image a word from the vocabulary will be
+%   assigned.
+%
+% INPUT
+% - voc:   The visual vocabulary as extracted from "visualVocabulary.m"
+% - descs: Matrix containing randomly selected descriptors for all pictures
+%
+% OUTPUT
+% - b_o_w: Bag of words
   
   [pCount, ~, descCount] = size(descs);
   vocabulary_size = size(voc, 2);
-  bag_of_words = zeros(pCount, descCount);
-  for p=1:pCount,
+  b_o_w = zeros(pCount, descCount);
+  
+  for p=1:pCount, % for each picture    
     
-    % assign each descriptor to closest visual word
-    for d=1:descCount,
-      closest_word = 0;
-      best_error = Inf('single');
-      for j=1:vocabulary_size,
+    for d = 1:descCount, % for each descriptor of that picture
+      least_error = Inf('single');
+      
+      for j = 1:vocabulary_size, % for each word from the vocabulary
+        
+        % computing squared error
         desc = single(reshape(descs(p, :, d), 128, 1));
         word = single(round(voc(:, j)));
-        % computing squared error
-        error = (word - desc).^2;
-        if sum(error) < best_error
-          closest_word = j;
-          best_error = sum(error);
-          % store the bag of visual words
-          bag_of_words(p, d) = closest_word;
+        error = sum( (word - desc).^2 );
+        
+        if error < least_error
+          % update the closest word assigned to the descriptor
+          least_error = error;
+          b_o_w(p, d) = j;
         end
+        
       end
     end
-    strcat('Image ', num2str(p), 'done')
+    fprintf( strcat( 'Image ', num2str(p), 'done\n') );
   end
 end
