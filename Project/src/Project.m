@@ -7,7 +7,7 @@ fprintf( 'visual vocabulary built\n' );
 images = quantizeFeatures ( voc , images );
 fprintf( 'quantizing features done\n' );
 
-histo = generateHistogram( images );
+histo = generateHistogram( images , 1 );
 
 % 2.5 classification / Training the svm
 % Step 1 : First positive classifier.
