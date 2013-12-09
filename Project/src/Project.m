@@ -1,16 +1,18 @@
+T_IMG_RATIO = .9; % The percentage of images used for the vocabulary TODO make use of this later
 
 % Create vocabulary, get used descriptors
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
-[ voc, images ]  = visualVocabulary ( 4, 100, vocabulary_sizes(1) );
+[ voc, vocabImages ]  = visualVocabulary ( 4, 100, vocabulary_sizes(1) );
 fprintf( 'visual vocabulary built\n' );
 
-images = quantizeFeatures ( voc , images );
+vocabImages = quantizeFeatures ( voc , vocabImages );
 fprintf( 'quantizing features done\n' );
 
-histo = generateHistogram( images , 1 );
+histo = generateHistogram( vocabImages , 1 );
 
 % 2.5 classification / Training the svm
-% Step 1 : First positive classifier.
+trainingImages = readTrainingImages( 1 - T_IMG_RATIO );
+% Step 1 : First positive classifier. 
 %          Generate positive examples (default : 50 histograms of size 400)
 %
 %   Take images from the training set of the related class (but which you did
