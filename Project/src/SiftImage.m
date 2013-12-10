@@ -27,11 +27,11 @@ classdef SiftImage
       obj.imgSize = size( obj.grayImg );
       
       % generate sampleDescs, choose 'descCount' descriptors to keep (randomly)
-      [~, obj.allDescs] = vl_dsift( obj.grayImg );
-      rand         = randi(size(obj.allDescs(:, :), 2), 1, descCount);   
+      [~, descs] = vl_dsift( obj.grayImg );
+      rand       = randi(size(descs, 2), 1, descCount);   
       
-      obj.allDescs    = single( obj.allDescs );
-      obj.sampleDescs = obj.allDescs(:, rand);
+%       obj.allDescs    = single( descs );
+      obj.sampleDescs = single( descs(:, rand) );
       obj.bagOfWords  = zeros( 1, size(obj.sampleDescs, 2) );
     end
       
