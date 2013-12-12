@@ -1,9 +1,10 @@
-function histograms = generateHistogram( images , surpressPlots)
+function histograms = generateHistogram( images , vocSize, surpressPlots)
 %GENERATEHISTOGRAM Visualization of the bag of words
 %   Makes use of MATLAB 'hist' function to visualize a given bag of words
 %
 % INPUT
 % - images: Matrix containing instances of class image
+% - vocSize: size of vocabulary
 % - surpressPlots: boolean flag for plotting
 %
 % OUTPUT
@@ -12,7 +13,7 @@ function histograms = generateHistogram( images , surpressPlots)
   imageCount = length( images );
   catCount   = 4;
   imgs_per_cat = imageCount / catCount;
-  histograms = zeros(imageCount, 400);
+  histograms = zeros(imageCount, vocSize);
   if ~surpressPlots
     figure;
   end
@@ -20,7 +21,7 @@ function histograms = generateHistogram( images , surpressPlots)
     image = images(i);
     % normalize histograms
     normFactor = round (length(image.bagOfWords) / 100);
-    histograms(i, :) = hist( image.bagOfWords , 400 ) / normFactor;
+    histograms(i, :) = hist( image.bagOfWords , vocSize ) / normFactor;
     if ~surpressPlots
       subplot( catCount, imgs_per_cat, i);
       hist( image.bagOfWords );
