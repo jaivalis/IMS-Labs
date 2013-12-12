@@ -1,4 +1,4 @@
-function histograms = generateHistogram( images , surpressPlots, vocSize)
+function histograms = generateHistogram( images , vocSize, surpressPlots)
 %GENERATEHISTOGRAM Visualization of the bag of words
 %   Makes use of MATLAB 'hist' function to visualize a given bag of words
 %
