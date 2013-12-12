@@ -10,3 +10,6 @@ Assignment3/out/*
 *.synctex.gz
 
 Project/data/*/*
+
+*.megw64
+*.mexglx
