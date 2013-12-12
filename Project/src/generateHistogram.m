@@ -18,7 +18,9 @@ function histograms = generateHistogram( images , surpressPlots)
   end
   for i = 1:imageCount,
     image = images(i);
-    histograms(i, :) = hist( image.bagOfWords , 400 );
+    % normalize histograms
+    normFactor = round (length(image.bagOfWords) / 100);
+    histograms(i, :) = hist( image.bagOfWords , 400 ) / normFactor;
     if ~surpressPlots
       subplot( catCount, imgs_per_cat, i);
       hist( image.bagOfWords );
