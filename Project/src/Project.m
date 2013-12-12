@@ -3,10 +3,11 @@ descCount = 100;
 
 %% Create vocabulary, obtain used descriptors
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
+siftType = 'rgb';
 % TODO: Use this line:
 %[ voc, ~ ]  = visualVocabulary ( vocImgRatio, descCount, vocabulary_sizes(1) );
 % DEBUG:
-[ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocabulary_sizes(1) );
+[ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocabulary_sizes(1), siftType );
 fprintf( 'visual vocabulary built\n' );
 
 % vocabImages = quantizeFeatures ( voc , vocabImages );
@@ -16,7 +17,7 @@ fprintf( 'visual vocabulary built\n' );
 
 %% 2.5 classification / Training the svm
 % load the training images from all folders
-trainingImages = readTrainingImages( vocImgRatio, descCount );
+trainingImages = readTrainingImages( vocImgRatio, descCount, siftType );
 % fprintf( 'training images read\n' );
 
 % create the required labels for training the svms

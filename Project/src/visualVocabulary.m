@@ -1,4 +1,4 @@
-function [ voc, images ] = visualVocabulary( V_IMG_RATIO, descCount, vocSize )
+function [ voc, images ] = visualVocabulary( V_IMG_RATIO, descCount, vocSize, siftType )
 % VISUALVOCABULARY2
 % INPUT
 % - picCount:  count of sample pictures (if -1 will take all folder contents)
@@ -11,7 +11,6 @@ function [ voc, images ] = visualVocabulary( V_IMG_RATIO, descCount, vocSize )
 % - 
 % algorithm: http://cs.brown.edu/courses/cs143/2011/results/proj3/georgem/
 desc_all = zeros(128, 0);
-
 trainingFolders = dir ( fullfile ('..', 'data', '*_train') );
 
 classLabel = 1; imgIndex = 1;
@@ -28,7 +27,7 @@ for fNum = 1:length( trainingFolders ), % for each training folder
     pPath = fullfile('..', 'data', folderName, pictures(pNum).name );
     img = imread( pPath );
 
-    si = SiftImage(img, classLabel, descCount);
+    si = SiftImage(img, classLabel, descCount, siftType);
 
     images( imgIndex ) = si;
 

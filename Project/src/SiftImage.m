@@ -14,7 +14,7 @@ classdef SiftImage
   
   methods
     % default constructor
-    function obj = SiftImage( img, classLabel, descCount )
+    function obj = SiftImage( img, classLabel, descCount,  siftType)
       obj.img        = img;
       obj.grayImg    = zeros(size(img));
       obj.classLabel = classLabel;
@@ -27,7 +27,29 @@ classdef SiftImage
       obj.imgSize = size( obj.grayImg );
       
       % generate sampleDescs, choose 'descCount' descriptors to keep (randomly)
-      [~, descs] = vl_dsift( obj.grayImg );
+      switch siftType
+        case 'dense'
+          [~, descs] = vl_dsift( obj.grayImg );
+        case 'keyPoints'
+          [~, descs] = vl_sift( single(obj.grayImg) );
+        case 'rgb'
+          [~, descs] = vl_sift( single(obj.img(:, :, 1)) );
+          [~, temp] = vl_sift( single(obj.img(:, :, 2)) );
+          descs = cat(2, descs, temp);
+          [~, temp] = vl_sift( single(obj.img(:, :, 3)) );
+          descs = cat(2, descs, temp);
+        case 'RGB'
+          % normalized rgb?
+        case 'opponent'
+          opp1(:, :) = ( obj.img(:, :, 1) - obj.img(:, :, 2) ) / sqrt(2);
+          opp2(:, :) = ( ( obj.img(:, :, 1) + obj.img(:, :, 2) ) - 2 * obj.img(:, :, 3) ) / sqrt(6);
+          opp3(:, :) = ( ( obj.img(:, :, 1) + obj.img(:, :, 2) ) + obj.img(:, :, 3) ) / sqrt(3);
+          [~, descs] = vl_sift( single(opp1) );
+          [~, temp] = vl_sift( single(opp2) );
+          descs = cat(2, descs, temp);
+          [~, temp] = vl_sift( single(opp3) );
+          descs = cat(2, descs, temp);
+      end 
       rand       = randi(size(descs, 2), 1, descCount);   
       
 %       obj.allDescs    = single( descs );

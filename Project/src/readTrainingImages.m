@@ -1,4 +1,4 @@
-function trainingImgs = readTrainingImages( ignoreRatio, descCount )
+function trainingImgs = readTrainingImages( ignoreRatio, descCount, siftType )
 %READTRAININGIMAGES Returns a set of images to train from
 %   Detailed explanation goes here
 %
@@ -26,7 +26,7 @@ for fNum = 1:length( trainingFolders ), % for each training folder
     pPath = fullfile('..', 'data', folderName, pictures(pNum).name );
     img = imread( pPath );
 
-    si = SiftImage(img, classLabel, descCount);
+    si = SiftImage(img, classLabel, descCount, siftType);
     trainingImgs( imgIndex ) = si;
 
     imgIndex = imgIndex + 1;
