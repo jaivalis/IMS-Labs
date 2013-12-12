@@ -8,12 +8,13 @@ siftType = 'keyPoints';
 %[ voc, ~ ]  = visualVocabulary ( vocImgRatio, descCount, vocabulary_sizes(1) );
 % DEBUG:
 [ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocabulary_sizes(1), siftType );
+[ ~, vocSize ] = size(voc);
 fprintf( 'visual vocabulary built\n' );
 
 % vocabImages = quantizeFeatures ( voc , vocabImages );
 % fprintf( 'quantizing features done\n' );
 
-% histo = generateHistogram( vocabImages , 1 );
+% histo = generateHistogram( vocabImages, vocSize, 1);
 
 %% 2.5 classification / Training the svm
 % load the training images from all folders
@@ -22,9 +23,10 @@ trainingImages = readTrainingImages( vocImgRatio, descCount, siftType );
 
 % create the required labels for training the svms
 vocabImages = quantizeFeatures ( voc , trainingImages );
-histograms = generateHistogram( vocabImages , 1 );
+histograms = generateHistogram( vocabImages, vocSize, 1 );
 for i=1:length(vocabImages),
   tImg = vocabImages(i);
+  labels(i) = tImg.classLabel;
   switch(tImg.classLabel)
     case 1
       labelsAir(i)=1;  labelsCar(i)=0;  labelsFac(i)=0;  labelsMot(i)=0;
@@ -41,6 +43,7 @@ modelAir = svmtrain( labelsAir', histograms , '-b 1 -q' );
 modelCar = svmtrain( labelsCar', histograms , '-b 1 -q' );
 modelFac = svmtrain( labelsFac', histograms , '-b 1 -q' );
 modelMot = svmtrain( labelsMot', histograms , '-b 1 -q' );
+svm = svmtrain(labels', histograms, '-b 1 -q' );
 % save the svms to files for fast debugging
 save './svmBak/modelAir.mat' modelAir;
 save './svmBak/modelCar.mat' modelCar;
@@ -70,6 +73,8 @@ testFolders = dir( fullfile('..', 'data', '*_test') );
 
 classLabel = 1;
 imgIndex   = 1;
+
+accuracy = zeros(1, 4);
 for fNum = 1:length( testFolders ), % for each testing folder    
   folderName = testFolders( fNum ).name;
   pictures = dir( fullfile('..', 'data', folderName, '*.jpg') );
@@ -84,12 +89,15 @@ for fNum = 1:length( testFolders ), % for each testing folder
 
     si = SiftImage(img, classLabel, descCount, siftType);
 %     testingImgs( imgIndex ) = si;
-    siHist = generateHistogram( si, 1 );
+    siHist = generateHistogram( si, vocSize, 1 );
     
-    [air_pred, accuracy_air, dec_values_air] = svmpredict(classLabel, siHist, modelAir, '-b 1');
-    air_pred
+    [air_pred, accu, dec_values_air] = svmpredict(classLabel, siHist, svm, '-b 1 -q');
+
+    accuracy(classLabel) = accuracy(classLabel) + (air_pred == classLabel);
     
     imgIndex = imgIndex + 1;
   end
+  accuracy(classLabel) = accuracy(classLabel) / pNum;
   classLabel = classLabel + 1;
 end
+accuracy
