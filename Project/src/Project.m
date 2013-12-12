@@ -3,7 +3,7 @@ descCount = 100;
 
 %% Create vocabulary, obtain used descriptors
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
-siftType = 'rgb';
+siftType = 'keyPoints';
 % TODO: Use this line:
 %[ voc, ~ ]  = visualVocabulary ( vocImgRatio, descCount, vocabulary_sizes(1) );
 % DEBUG:
@@ -37,15 +37,16 @@ for i=1:length(vocabImages),
   end
 end
 % train the four svms
-modelAir = svmtrain( labelsAir', histograms , '-b 1' );
-modelCar = svmtrain( labelsCar', histograms , '-b 1');
-modelFac = svmtrain( labelsFac', histograms , '-b 1' );
-modelMot = svmtrain( labelsMot', histograms , '-b 1' );
+modelAir = svmtrain( labelsAir', histograms , '-b 1 -q' );
+modelCar = svmtrain( labelsCar', histograms , '-b 1 -q' );
+modelFac = svmtrain( labelsFac', histograms , '-b 1 -q' );
+modelMot = svmtrain( labelsMot', histograms , '-b 1 -q' );
 % save the svms to files for fast debugging
 save './svmBak/modelAir.mat' modelAir;
 save './svmBak/modelCar.mat' modelCar;
 save './svmBak/modelFac.mat' modelFac;
 save './svmBak/modelMot.mat' modelMot;
+fprintf( 'Models trained and saved\n' );
 
 % Keep these comments, might be incorporated in the report
 % Step 1 : First positive classifier. 
@@ -64,3 +65,31 @@ save './svmBak/modelMot.mat' modelMot;
 
 
 %% 2.6 Evaluate
+
+testFolders = dir( fullfile('..', 'data', '*_test') );
+
+classLabel = 1;
+imgIndex   = 1;
+for fNum = 1:length( testFolders ), % for each testing folder    
+  folderName = testFolders( fNum ).name;
+  pictures = dir( fullfile('..', 'data', folderName, '*.jpg') );
+
+  picturesInFolder = length(pictures);
+  
+  fprintf( strcat('\tImages in test folder #', num2str(fNum), ...
+                ':',  num2str(picturesInFolder), '\n'));
+  for pNum = 1:picturesInFolder,
+    pPath = fullfile('..', 'data', folderName, pictures(pNum).name );
+    img = imread( pPath );
+
+    si = SiftImage(img, classLabel, descCount, siftType);
+%     testingImgs( imgIndex ) = si;
+    siHist = generateHistogram( si, 1 );
+    
+    [air_pred, accuracy_air, dec_values_air] = svmpredict(classLabel, siHist, modelAir, '-b 1');
+    air_pred
+    
+    imgIndex = imgIndex + 1;
+  end
+  classLabel = classLabel + 1;
+end
