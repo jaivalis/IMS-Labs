@@ -37,10 +37,10 @@ for i=1:length(vocabImages),
   end
 end
 % train the four svms
-modelAir = svmtrain( histograms , labelsAir );
-modelCar = svmtrain( histograms , labelsCar );
-modelFac = svmtrain( histograms , labelsFac );
-modelMot = svmtrain( histograms , labelsMot );
+modelAir = svmtrain( labelsAir', histograms , '-b 1' );
+modelCar = svmtrain( labelsCar', histograms , '-b 1');
+modelFac = svmtrain( labelsFac', histograms , '-b 1' );
+modelMot = svmtrain( labelsMot', histograms , '-b 1' );
 % save the svms to files for fast debugging
 save './svmBak/modelAir.mat' modelAir;
 save './svmBak/modelCar.mat' modelCar;

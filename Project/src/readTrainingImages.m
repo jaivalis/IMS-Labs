@@ -5,6 +5,7 @@ function trainingImgs = readTrainingImages( ignoreRatio, descCount, siftType )
 % INPUT
 % - ignoreRatio: The percentage of pictures used for vocabulary (to ignore)
 % - descCount:   Number of descriptors (TODO remove)
+% - siftType:  string of type of sift descriptors
 %
 % OUTPUT
 % - trainingImgs: Matrix of training image instances.

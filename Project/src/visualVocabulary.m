@@ -4,6 +4,7 @@ function [ voc, images ] = visualVocabulary( V_IMG_RATIO, descCount, vocSize, si
 % - picCount:  count of sample pictures (if -1 will take all folder contents)
 % - descCount: count of descriptors to take per sample image
 % - vocSize:   count of visual words the vocabulary will contain
+% - siftType:  string of type of sift descriptors
 %
 % OUTPUT
 % - voc:   
