@@ -49,12 +49,19 @@ classdef SiftImage
           descs = cat(2, descs, temp);
           [~, temp] = vl_sift( single(opp3) );
           descs = cat(2, descs, temp);
-      end 
-      rand       = randi(size(descs, 2), 1, descCount);   
+      end
       
-%       obj.allDescs    = single( descs );
-      obj.sampleDescs = single( descs(:, rand) );
+      % if siftType is dense, only select 100 descriptors randomly, since
+      % size of all descriptors for one image is 130.000 otherwise
+      if strcmp(siftType,'dense')
+        rand            = randi(size(descs, 2), 1, descCount);   
+        obj.sampleDescs = single( descs(:, rand) );
+      else
+        obj.sampleDescs = descs;
+      end
+      
       obj.bagOfWords  = zeros( 1, size(obj.sampleDescs, 2) );
+      
     end
       
   end
