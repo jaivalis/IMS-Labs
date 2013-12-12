@@ -20,10 +20,11 @@ function images = quantizeFeatures( voc , images )
     
     for d = 1:descCount, % for each descriptor of that picture
       least_error = Inf('single');
-      desc = descs(:, d);
+      desc = single(descs(:, d));
       
       for j = 1:vocabulary_size, % for each word from the vocabulary
         word = single(round(voc(:, j)));
+        
         % squared error computation:
         error = sum( (word - desc).^2 );
         
