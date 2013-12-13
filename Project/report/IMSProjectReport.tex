@@ -13,17 +13,35 @@
 	\textbf{IMS Final Project Report}
 }
 
-\author{Tobias Stahl \\ 10528199 \and Ioannis Giounous Aivalis \\ 10524851 }
+\author{Tobias Stahl \\ 10528199 \and Ioannis-Giounous Aivalis \\ 10524851 }
 
 \begin{document}
 
 \maketitle
 
 \section{Introduction}
+In this report we will present the process followed in order to create an end-to-end system for image classification. The product system will perform image classification on four classes of images (airplanes, motorbikes, faces and cars) using the bag-of-words approach.
+%TODO - alternative to the next sentense ?
+The report is layed out as follows, first we will explain the theoretical aspect of how our model works. Then we will get more into technical details about how our system can be divided into logical units.
 
-\section{~}
+\section{Bag-of-Words based Image Classification}
+In this section we will shortly describe the method used in order to achieve the final system. For classification we used the Bag-of-words approach. The rest of this section is divided into logical parts explaining the pipeline of the system as it was implemented and the series of actions it takes to get from plain input images to calssified output images.
 
-\section{~}
+The Bag-of-words approach originates from the Natural Language Processing and Information Retrieval fields. According to this method the document is represented by a bag (multiset) of words consisting it. These bags are later used for training a classifier on those documents.
+
+Similarly, in the image case, each image is represented as a bag of words, the words being-this time, the descriptors the image consists of. More specifically, each of the images descriptors is assigned a word from a predefined vocabulary. All of these terms will be explained in the remaining of this section. 
+
+\subsection{Feature Extraction and Description}
+
+\subsection{Building Visual Vocabulary}
+
+\subsection{Quantize Features Using Visual Vocabulary}
+
+\subsection{Representing images by frequencies of visual words}
+
+\subsection{Classification}
+
+\section{Evaluation}
 
 \section{Conclusion}
 
