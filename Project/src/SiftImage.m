@@ -27,6 +27,7 @@ classdef SiftImage
       end
       obj.imgSize = size( obj.grayImg );
       
+      % http://web.njit.edu/~sb256/research_files/CACS.pdf
       % generate sampleDescs, choose 'descCount' descriptors to keep (randomly)
       switch siftType
         case 'dense'
@@ -34,22 +35,50 @@ classdef SiftImage
         case 'keyPoints'
           [~, descs] = vl_sift( single(obj.grayImg) );
         case 'rgb'
-          [~, descs] = vl_sift( single(obj.img(:, :, 1)) );
-          [~, temp] = vl_sift( single(obj.img(:, :, 2)) );
-          descs = cat(2, descs, temp);
-          [~, temp] = vl_sift( single(obj.img(:, :, 3)) );
+          intensity = obj.grayImg;
+          threshold = max(max(intensity())) / 2;
+          filter = intensity>threshold;
+          r = filter .* single(obj.img(:, :, 1));
+          g = filter .* single(obj.img(:, :, 2));
+          b = filter .* single(obj.img(:, :, 3));
+          [~, descs1] = vl_sift( r );
+          [~, temp] = vl_sift( g );
+          descs = cat(2, descs1, temp);
+          [~, temp1] = vl_sift( b );
           descs = cat(2, descs, temp);
         case 'RGB'
-          % normalized rgb?
+          % normalized rgb
+          intensity = obj.grayImg;
+          threshold = max(max(intensity())) / 2;
+          filter = intensity>threshold;
+          r = filter .* single(obj.img(:, :, 1));
+          g = filter .* single(obj.img(:, :, 2));
+          b = filter .* single(obj.img(:, :, 3));
+          r_norm = r ./ (r + g + b);
+          g_norm = g ./ (r + g + b);
+          b_norm = b ./ (r + g + b);
+          r_norm(isnan(r_norm)) = 1/sqrt(3);
+          g_norm(isnan(g_norm)) = 1/sqrt(3);
+          b_norm(isnan(b_norm)) = 1/sqrt(3);
+          [~, descs1] = vl_sift( r_norm );
+          [~, temp] = vl_sift( g_norm );
+          descs = cat(2, descs1, temp);
+          [~, temp1] = vl_sift( b_norm );
+          descs = cat(2, descs, temp);
         case 'opponent'
-          opp1(:, :) = ( obj.img(:, :, 1) - obj.img(:, :, 2) ) / sqrt(2);
-          opp2(:, :) = ( ( obj.img(:, :, 1) + obj.img(:, :, 2) ) - 2 * obj.img(:, :, 3) ) / sqrt(6);
-          opp3(:, :) = ( ( obj.img(:, :, 1) + obj.img(:, :, 2) ) + obj.img(:, :, 3) ) / sqrt(3);
+          intensity = obj.grayImg;
+          threshold = max(max(intensity())) / 2;
+          filter = intensity>threshold;
+          opp1(:, :) = filter .* single(( obj.img(:, :, 1) - obj.img(:, :, 2) ) / sqrt(2));
+          opp2(:, :) = filter .* single(( ( obj.img(:, :, 1) + obj.img(:, :, 2) ) - 2 * obj.img(:, :, 3) ) / sqrt(6));
+          opp3(:, :) = filter .* single(( ( obj.img(:, :, 1) + obj.img(:, :, 2) ) + obj.img(:, :, 3) ) / sqrt(3));
           [~, descs] = vl_sift( single(opp1) );
           [~, temp] = vl_sift( single(opp2) );
           descs = cat(2, descs, temp);
           [~, temp] = vl_sift( single(opp3) );
           descs = cat(2, descs, temp);
+        case 'all'
+          % TOTO ???
       end
       
       % if siftType is dense, only select 100 descriptors randomly, since
