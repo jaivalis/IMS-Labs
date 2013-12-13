@@ -38,11 +38,12 @@ for i=1:length(vocabImages),
       labelsAir(i)=0;  labelsCar(i)=0;  labelsFac(i)=0;  labelsMot(i)=1;
   end
 end
-% train the four svms
+% train the four svms + 1 multiclass svm
 modelAir = svmtrain( labelsAir', histograms , '-b 1 -q' );
 modelCar = svmtrain( labelsCar', histograms , '-b 1 -q' );
 modelFac = svmtrain( labelsFac', histograms , '-b 1 -q' );
 modelMot = svmtrain( labelsMot', histograms , '-b 1 -q' );
+
 svm = svmtrain(labels', histograms, '-b 1 -q' );
 % save the svms to files for fast debugging
 save './svmBak/modelAir.mat' modelAir;
@@ -71,11 +72,9 @@ fprintf( 'Models trained and saved\n' );
 
 testFolders = dir( fullfile('..', 'data', '*_test') );
 
-classLabel = 1;
-imgIndex   = 1;
-
 accuracy = zeros(1, 4);
-for fNum = 1:length( testFolders ), % for each testing folder    
+for fNum = 1:length( testFolders ), % for each testing folder
+  classLabel = fNum;
   folderName = testFolders( fNum ).name;
   pictures = dir( fullfile('..', 'data', folderName, '*.jpg') );
 
@@ -94,10 +93,8 @@ for fNum = 1:length( testFolders ), % for each testing folder
     [air_pred, accu, dec_values_air] = svmpredict(classLabel, siHist, svm, '-b 1 -q');
 
     accuracy(classLabel) = accuracy(classLabel) + (air_pred == classLabel);
-    
-    imgIndex = imgIndex + 1;
   end
+  % update the accuracy for the given class (folder)
   accuracy(classLabel) = accuracy(classLabel) / pNum;
-  classLabel = classLabel + 1;
 end
 accuracy
