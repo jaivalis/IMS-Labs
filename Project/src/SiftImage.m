@@ -1,6 +1,7 @@
 classdef SiftImage
-  %SIFTIMAGE Summary of this class goes here
-  %   Detailed explanation goes here
+  %SIFTIMAGE Image class containing the required properties for images
+  %   All images read from the input folders will be mapped to a SiftImage
+  %   instance
   
   properties
     img

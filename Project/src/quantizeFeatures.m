@@ -36,6 +36,6 @@ function images = quantizeFeatures( voc , images )
         
       end
     end
-    fprintf( strcat( '\tImage ', num2str(p), 'done\n') );
+    fprintf( strcat( '\tquantizeFeatures(): Image ', num2str(p), 'done\n') );
   end
 end
