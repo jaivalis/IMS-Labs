@@ -11,7 +11,6 @@ function images = quantizeFeatures( voc, images )
 % - b_o_w: Bag of words
   
   pCount = length(images);
-  vocabulary_size = size(voc, 2);
   
   for p = 1:pCount, % for each picture
     siftImg   = images( p );
@@ -19,22 +18,11 @@ function images = quantizeFeatures( voc, images )
     descCount = size( descs, 2 );
     
     for d = 1:descCount, % for each descriptor of that picture
-      least_error = Inf('single');
       desc = single(descs(:, d));
       
-      for j = 1:vocabulary_size, % for each word from the vocabulary
-        word = single(round(voc(:, j)));
-        
-        % squared error computation:
-        error = sum( (word - desc).^2 );
-        
-        if error < least_error
-          % update the closest word assigned to the descriptor
-          least_error = error;
-          images(p).bagOfWords(d) = j;
-        end
-        
-      end
+      % find the closest word
+      images(p).bagOfWords(d) = dsearchn(voc', desc');
+      
     end
     fprintf( strcat( '\tquantizeFeatures(): Image ', num2str(p), 'done\n') );
   end
