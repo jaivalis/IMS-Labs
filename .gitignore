@@ -8,6 +8,9 @@ Assignment3/out/*
 *.aux
 *.log
 *.synctex.gz
+*.bbl
+*.blg
+*.mpg
 
 Project/data/*/*
 
