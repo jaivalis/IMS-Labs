@@ -8,7 +8,7 @@ function images = quantizeFeatures( voc, images )
 % - images: Matrix containing randomly selected descriptors for all pictures
 %
 % OUTPUT
-% - b_o_w: Bag of words
+% - images: bag of words updated
   
   pCount = length(images);
   
@@ -24,6 +24,8 @@ function images = quantizeFeatures( voc, images )
       images(p).bagOfWords(d) = dsearchn(voc', desc');
       
     end
-    fprintf( strcat( '\tquantizeFeatures(): Image ', num2str(p), 'done\n') );
+    if mod(p,25) == 0 
+      fprintf( strcat( '\tquantizeFeatures(): Image ', num2str(p), 'done\n') );
+    end
   end
 end

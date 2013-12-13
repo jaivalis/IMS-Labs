@@ -7,8 +7,8 @@ function [ voc, images ] = visualVocabulary( V_IMG_RATIO, descCount, vocSize, si
 % - siftType:  string of type of sift descriptors
 %
 % OUTPUT
-% - voc:   
-% - descs: Matrix containing randomly selected descriptors for all pictures
+% - voc: visual vocabulary
+% - images: Matrix containing randomly selected descriptors for all pictures
 % - 
 % algorithm: http://cs.brown.edu/courses/cs143/2011/results/proj3/georgem/
 desc_all = zeros(128, 0);
@@ -39,6 +39,6 @@ for fNum = 1:length( trainingFolders ), % for each training folder
   classLabel = classLabel + 1; % new folder > new class
 end
 % run k-means clustering
-voc = vl_kmeans(desc_all, vocSize);
+voc = vl_kmeans(desc_all, vocSize, 'algorithm', 'ann');
 
 end
