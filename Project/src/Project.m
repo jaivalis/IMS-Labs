@@ -1,13 +1,13 @@
-vocImgRatio = .99; % The percentage of images used for the vocabulary TODO make use of this later
+vocImgRatio = .20; % The percentage of images used for the vocabulary TODO make use of this later
 descCount = 100;
 
 %% Create vocabulary, obtain used descriptors
 vocabulary_sizes = [400, 800, 1600, 2000, 4000];
 siftType = 'keyPoints';
 % TODO: Use this line:
-%[ voc, ~ ]  = visualVocabulary ( vocImgRatio, descCount, vocabulary_sizes(1) );
+[ voc, ~ ] = visualVocabulary ( vocImgRatio, descCount, vocabulary_sizes(2), siftType );
 % DEBUG:
-[ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocabulary_sizes(1), siftType );
+% [ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocabulary_sizes(1), siftType );
 [ ~, vocSize ] = size(voc);
 fprintf( 'visual vocabulary built\n' );
 
