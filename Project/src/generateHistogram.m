@@ -18,15 +18,14 @@ function histograms = generateHistogram( images , vocSize, surpressPlots)
     figure;
   end
   for i = 1:imageCount,
-    image = images(i);
+    img = images(i);
     % normalize histograms
-    normFactor = round (length(image.bagOfWords) / 100);
-    histograms(i, :) = hist( image.bagOfWords , vocSize ) / normFactor;
+    normFactor = round (length(img.bagOfWords) / 100);
+    histograms(i, :) = hist( img.bagOfWords, vocSize ) / normFactor;
+    
     if ~surpressPlots
       subplot( catCount, imgs_per_cat, i);
-      hist( image.bagOfWords );
+      hist( img.bagOfWords );
     end
   end
-
 end
-

@@ -1,4 +1,4 @@
-function images = quantizeFeatures( voc , images )
+function images = quantizeFeatures( voc, images )
 % QUANTIZEFEATURES Represent each image as a collection of visual words
 %   For each descriptor per image a word from the vocabulary will be
 %   assigned.

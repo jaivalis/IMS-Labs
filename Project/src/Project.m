@@ -24,8 +24,8 @@ trainingImages = readTrainingImages( vocImgRatio, descCount, siftType );
 % create the required labels for training the svms
 vocabImages = quantizeFeatures ( voc , trainingImages );
 histograms = generateHistogram( vocabImages, vocSize, 1 );
-for i=1:length(vocabImages),
-  tImg = vocabImages(i);
+for i=1:length(trainingImages),
+  tImg = trainingImages(i);
   labels(i) = tImg.classLabel;
   switch(tImg.classLabel)
     case 1
@@ -72,7 +72,7 @@ fprintf( 'Models trained and saved\n' );
 
 testFolders = dir( fullfile('..', 'data', '*_test') );
 
-accuracy = zeros(1, 4);
+pIndex = 1;
 for fNum = 1:length( testFolders ), % for each testing folder
   classLabel = fNum;
   folderName = testFolders( fNum ).name;
@@ -81,20 +81,20 @@ for fNum = 1:length( testFolders ), % for each testing folder
   picturesInFolder = length(pictures);
   
   fprintf( strcat('\tImages in test folder #', num2str(fNum), ...
-                ':',  num2str(picturesInFolder), '\n'));
+                                   ':',  num2str(picturesInFolder), '\n'));
   for pNum = 1:picturesInFolder,
     pPath = fullfile('..', 'data', folderName, pictures(pNum).name );
-    img = imread( pPath );
-
-    si = SiftImage(img, classLabel, descCount, siftType);
-%     testingImgs( imgIndex ) = si;
-    siHist = generateHistogram( si, vocSize, 1 );
     
-    [air_pred, accu, dec_values_air] = svmpredict(classLabel, siHist, svm, '-b 1 -q');
-
-    accuracy(classLabel) = accuracy(classLabel) + (air_pred == classLabel);
+    img = imread( pPath );
+    si = SiftImage(img, classLabel, descCount, siftType);
+    
+    testingImgs( pIndex ) = si;    
+    testLabels( pIndex )  = classLabel;
+    
+    pIndex = pIndex + 1;
   end
-  % update the accuracy for the given class (folder)
-  accuracy(classLabel) = accuracy(classLabel) / pNum;
 end
-accuracy
+testingImgs = quantizeFeatures( voc, testingImgs );
+histo = generateHistogram( testingImgs, vocSize, 1 );
+
+[labl, acc_msq_sqcc, prob_est] = svmpredict(testLabels', histo, svm, '-b 1 -q');
