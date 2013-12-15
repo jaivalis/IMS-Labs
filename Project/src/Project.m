@@ -1,11 +1,11 @@
 %% Experiment settings
 vocImgRatio = .20; % The percentage of images used for the vocabulary TODO make use of this later
 descCount = 300;
-siftTypes = {'dense' 'keypoints' 'rgb' 'RGB' 'opponent' 'all'};
+siftTypes = {'dense' 'keyPoints' 'rgb' 'RGB' 'opponent' 'all'};
 voc_sizes = [400, 800, 1600, 2000, 4000];
 
-vocSize   = voc_sizes(2);
-siftType  = siftTypes{1};
+siftType  = siftTypes{3};
+vocSize   = voc_sizes(1);
 
 %% Create vocabulary, obtain used descriptors
 % Use this line for full runs:

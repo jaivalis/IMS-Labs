@@ -44,7 +44,7 @@ classdef SiftImage
           [~, descs1] = vl_sift( r );
           [~, temp] = vl_sift( g );
           descs = cat(2, descs1, temp);
-          [~, temp1] = vl_sift( b );
+          [~, temp] = vl_sift( b );
           descs = cat(2, descs, temp);
         case 'RGB'
           % normalized rgb
@@ -63,7 +63,7 @@ classdef SiftImage
           [~, descs1] = vl_sift( r_norm );
           [~, temp] = vl_sift( g_norm );
           descs = cat(2, descs1, temp);
-          [~, temp1] = vl_sift( b_norm );
+          [~, temp] = vl_sift( b_norm );
           descs = cat(2, descs, temp);
         case 'opponent'
           intensity = obj.grayImg;
