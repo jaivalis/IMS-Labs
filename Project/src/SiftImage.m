@@ -34,7 +34,7 @@ classdef SiftImage
           [~, descs] = vl_dsift( obj.grayImg );
         case 'keyPoints'
           [~, descs] = vl_sift( single(obj.grayImg) );
-        case 'rgb'
+        case 'RGB'
           intensity = obj.grayImg;
           threshold = max(max(intensity())) / 2;
           filter = intensity>threshold;
@@ -46,7 +46,7 @@ classdef SiftImage
           descs = cat(2, descs1, temp);
           [~, temp] = vl_sift( b );
           descs = cat(2, descs, temp);
-        case 'RGB'
+        case 'rgb'
           % normalized rgb
           intensity = obj.grayImg;
           threshold = max(max(intensity())) / 2;
