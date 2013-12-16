@@ -1,17 +1,33 @@
+backupFolderPath = './backupVariables/';
+
 %% Experiment settings
 vocImgRatio = .20; % The percentage of images used for the vocabulary TODO make use of this later
 descCount = 300;
 siftTypes = {'dense' 'keyPoints' 'rgb' 'RGB' 'opponent' 'all'};
 voc_sizes = [400, 800, 1600, 2000, 4000];
 
-siftType  = siftTypes{3};
-vocSize   = voc_sizes(1);
+siftType  = siftTypes{5};
+vocSize   = voc_sizes(2);
+
+settingsPrefix = strcat( num2str(vocImgRatio*100), num2str(vocSize), siftType);
 
 %% Create vocabulary, obtain used descriptors
-% Use this line for full runs:
-[ voc, ~ ] = visualVocabulary ( vocImgRatio, descCount, voc_sizes(2), siftType );
-% DEBUG mode: [ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocabulary_sizes(1), siftType );
-fprintf( 'visual vocabulary built\n' );
+
+% Look for possible backed up visual vocabulary:
+possibleVocPath = strcat( backupFolderPath, settingsPrefix, 'VOC.mat' );
+
+if exist(possibleVocPath, 'file') % load from file  
+  fprintf( 'Found backup .voc file, loading from disk\n' );
+  voc = load(possibleVocPath);
+  
+else                              % generate and save to disk  
+  fprintf( 'No backup .voc file exists\n' );
+  [ voc, ~ ] = visualVocabulary ( vocImgRatio, descCount, vocSize, siftType );
+  % DEBUG mode: [ voc, ~ ]  = visualVocabulary ( 0.01, descCount, vocSize, siftType );
+  save( strcat( possibleVocPath ), 'voc');
+  fprintf( 'Backup .voc file created\n' );
+  
+end
 
 %% 2.5 classification / Training the svm
 % load the training images from all folders
@@ -30,7 +46,8 @@ end
 svm = svmtrain(labels', histograms, '-b 1 -q' );
 
 % save the svm to files for fast debugging
-save './svmBak/svm.mat'      svm;
+% save './svmBak/svm.mat'      svm;
+save( strcat( backupFolderPath, settingsPrefix, 'SVM.mat' ), 'variable');
 fprintf( 'Models trained and saved\n' );
 
 % Keep these comments, might be incorporated in the report
