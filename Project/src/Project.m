@@ -7,7 +7,7 @@ siftTypes = {'dense' 'keyPoints' 'rgb' 'RGB' 'opponent' 'all'};
 voc_sizes = [400, 800, 1600, 2000, 4000];
 
 siftType  = siftTypes{5};
-vocSize   = voc_sizes(2);
+vocSize   = voc_sizes(1);
 
 settingsPrefix = strcat( num2str(vocImgRatio*100), num2str(vocSize), siftType);
 
@@ -47,7 +47,7 @@ svm = svmtrain(labels', histograms, '-b 1 -q' );
 
 % save the svm to files for fast debugging
 % save './svmBak/svm.mat'      svm;
-save( strcat( backupFolderPath, settingsPrefix, 'SVM.mat' ), 'variable');
+save( strcat( backupFolderPath, settingsPrefix, 'SVM.mat' ), 'svm');
 fprintf( 'Models trained and saved\n' );
 
 % Keep these comments, might be incorporated in the report
