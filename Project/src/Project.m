@@ -6,8 +6,8 @@ descCount = 300;
 siftTypes = {'dense' 'keyPoints' 'rgb' 'RGB' 'opponent' 'all'};
 voc_sizes = [400, 800, 1600, 2000, 4000];
 
-siftType  = siftTypes{5};
-vocSize   = voc_sizes(1);
+siftType  = siftTypes{4};
+vocSize   = voc_sizes(3);
 
 settingsPrefix = strcat( num2str(vocImgRatio*100), num2str(vocSize), siftType);
 
@@ -18,7 +18,8 @@ possibleVocPath = strcat( backupFolderPath, settingsPrefix, 'VOC.mat' );
 
 if exist(possibleVocPath, 'file') % load from file  
   fprintf( 'Found backup .voc file, loading from disk\n' );
-  voc = load(possibleVocPath);
+  tmp = load(possibleVocPath);
+  voc = tmp.voc;
   
 else                              % generate and save to disk  
   fprintf( 'No backup .voc file exists\n' );
