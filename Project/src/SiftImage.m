@@ -46,7 +46,7 @@ classdef SiftImage
           descs = cat(2, descs1, temp);
           [~, temp] = vl_sift( b );
           descs = cat(2, descs, temp);
-        case 'rgb'
+        case 'rgb_'
           % normalized rgb
           intensity = obj.grayImg;
           threshold = max(max(intensity())) / 2;

@@ -3,11 +3,11 @@ backupFolderPath = './backupVariables/';
 %% Experiment settings
 vocImgRatio = .20; % The percentage of images used for the vocabulary TODO make use of this later
 descCount = 300;
-siftTypes = {'dense' 'keyPoints' 'rgb' 'RGB' 'opponent' 'all'};
+siftTypes = {'dense' 'keyPoints' 'rgb_' 'RGB' 'opponent' 'all'};
 voc_sizes = [400, 800, 1600, 2000, 4000];
 
 siftType  = siftTypes{4};
-vocSize   = voc_sizes(3);
+vocSize   = voc_sizes(1);
 
 settingsPrefix = strcat( num2str(vocImgRatio*100), num2str(vocSize), siftType);
 
